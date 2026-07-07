@@ -3,11 +3,14 @@ title: Faction
 weight: 6
 ---
 
-A **faction** is the in-game power a player commands. Each
-[player]({{< relref "/reference/players.md" >}}) commands exactly one faction, and
-a faction belongs to exactly one game. Where the *player* is the person's seat in
-a game, the *faction* is what that seat acts through: it holds systems, it is what
-orders are issued for, and it is what a turn report describes.
+A **faction** is the in-game power a player commands. A faction belongs to exactly
+one game and is commanded by exactly one [player]({{< relref "/reference/players.md" >}})
+— the person's seat in that game. Where the *player* is the seat, the *faction* is
+what that seat acts through: it holds systems, it is what orders are issued for,
+and it is what a turn report describes.
+
+(Not every player commands a faction: the game's GM runs the game and commands
+none. See [Players]({{< relref "/reference/players.md" >}}#game-master).)
 
 {{< callout type="info" >}}
 This page is a stub. It fixes the vocabulary — *faction* is the in-game entity a

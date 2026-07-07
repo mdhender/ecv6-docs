@@ -48,7 +48,8 @@ a faction.*
 - In each game, your account takes a [player]({{< relref "/reference/players.md" >}})
   seat — the per-game id, active state, and GM flag live there.
 - Each player commands one [faction]({{< relref "/reference/faction.md" >}}), the
-  in-game entity that acts within the game.
+  in-game entity that acts within the game — except the game's GM, a player who
+  runs the game and commands no faction.
 
 ## See also
 

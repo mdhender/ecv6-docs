@@ -16,9 +16,13 @@ task; for that, see the [How-to Guides](/how-to).
 
 ## Topics
 
+{{< cards >}}
+  {{< card link="accounts-players-factions" title="Accounts, players, and factions" subtitle="Why EC separates who you are, your seat in a game, and the entity you command." >}}
+{{< /cards >}}
+
 {{< callout type="info" >}}
-Essays on the 4X design, the play-by-email model, the setting and lore, and the
-history of the game will appear here.
+More essays — on the 4X design, the play-by-email model, the setting and lore, and
+the history of the game — will appear here.
 {{< /callout >}}
 
 If you would rather *do* something than read about it, head to the

@@ -5,9 +5,9 @@ weight: 5
 
 A **player** is a person's seat in a single game. When an
 [account]({{< relref "/reference/account.md" >}}) joins a game it takes a player
-seat there; the player belongs to exactly one game and commands one
-[faction]({{< relref "/reference/faction.md" >}}). Each game has its own set of
-players.
+seat there; the player belongs to exactly one game and, unless they are the
+game's GM, commands one [faction]({{< relref "/reference/faction.md" >}}). Each
+game has its own set of players.
 
 Your *global* identity — your email and password — lives on your
 [account]({{< relref "/reference/account.md" >}}), not on the player. What the
@@ -56,9 +56,17 @@ games at once, each with its own id.
 
 ## Faction
 
-Every player commands exactly one [faction]({{< relref "/reference/faction.md" >}}):
+Almost every player commands exactly one [faction]({{< relref "/reference/faction.md" >}}):
 the in-game entity — its systems, the orders issued for it, and its turn report —
 that the player acts through.
+
+## Game master
+
+One player in each game is the **game master (GM)**: a player whose GM flag is
+set. The GM runs the game — generating the cluster, processing turns, and managing
+the other players — and commands no faction of their own. In every other respect
+the GM is an ordinary player: a seat in one game, with its own id, reached through
+an [account]({{< relref "/reference/account.md" >}}).
 
 ## Randomness
 

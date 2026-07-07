@@ -20,14 +20,14 @@ Definitions of terms used across the reference.
 
 **Faction**
 : The in-game entity a player commands in a game — its systems, the orders issued for it, and its turn report.
-  Each player commands exactly one faction.
+  A faction is commanded by exactly one player; the game's GM commands none.
   See [Faction]({{< relref "/reference/faction.md" >}}).
 
 **Game**
 : The top-level unit of play; the cluster, the players, and their factions belong to it.
 
 **GM**
-: The game master: a player whose GM flag is set, who generates and runs the game.
+: The game master: a player whose GM flag is set, who runs the game and commands no faction.
 
 **Master seed**
 : One of the two `uint64` values (`seed1`, `seed2`) saved for a game.
@@ -38,7 +38,7 @@ Definitions of terms used across the reference.
 : The center hex of the cluster, at axial coordinates `(0, 0)`.
 
 **Player**
-: A person's seat in a single game: the per-game id, active state, GM flag, and the faction commanded.
+: A person's seat in a single game: the per-game id, active state, GM flag, and the faction commanded (none for the GM).
   A person's global identity — email and password — is their [account]({{< relref "/reference/account.md" >}}).
   See [Players]({{< relref "/reference/players.md" >}}).
 
