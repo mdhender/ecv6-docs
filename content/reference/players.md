@@ -1,14 +1,22 @@
 ---
 title: Players
-weight: 4
+weight: 5
 ---
 
-A **player** is a person participating in a game.
-Players are scoped to a game: each game has its own set of players, and a player belongs to exactly one game.
+A **player** is a person's seat in a single game. When an
+[account]({{< relref "/reference/account.md" >}}) joins a game it takes a player
+seat there; the player belongs to exactly one game and commands one
+[faction]({{< relref "/reference/faction.md" >}}). Each game has its own set of
+players.
+
+Your *global* identity — your email and password — lives on your
+[account]({{< relref "/reference/account.md" >}}), not on the player. What the
+player carries is everything specific to one game: its id, its active state, and
+the faction it commands.
 
 ## Identity
 
-Every player has two unique identifying fields: an id and an email.
+A player is identified within its game by an **id**.
 
 ### ID
 
@@ -18,12 +26,9 @@ Every player has two unique identifying fields: an id and an email.
   The first player created in a game is `1`, the next `2`, and so on.
   IDs are never reused within a game, even after a player is removed.
 
-### Email
-
-- The player's email address.
-- Stored in lowercase.
-  The email is lowercased when the player is saved, so `Alice@Example.com` is stored and matched as `alice@example.com`.
-- Unique within the game, compared after lowercasing.
+This is the **player** (seat) id, distinct from the account. It names a seat in
+one game; a person's global identity is their [account]({{< relref "/reference/account.md" >}})
+email, which is the same across every game.
 
 ## Active state
 
@@ -31,38 +36,29 @@ Every player is either **active** or **inactive**.
 A player is active when created.
 
 Players are never physically deleted.
-**Removing** a player marks them inactive; the record — including its id and email — is retained in full.
+**Removing** a player marks them inactive; the record — including its id — is retained in full.
 **Reactivating** an inactive player marks them active again.
 A player may move between the two states any number of times.
 
-Because the record is retained:
-
-- The player's id is never freed or reused, matching the id rule above.
-  A removed player's id stays assigned to that player.
-- The player continues to occupy its email.
-  The email can not be taken by a new or existing player while the inactive record holds it — uniqueness is enforced across active and inactive players alike (see [Uniqueness and scope](#uniqueness-and-scope)).
+Because the record is retained, the player's id is never freed or reused, matching
+the id rule above. A removed player's id stays assigned to that player (see
+[Uniqueness and scope](#uniqueness-and-scope)).
 
 ## Uniqueness and scope
 
-Within a single game, each of `id`, `email` is unique.
-Email uniqueness is checked after lowercasing.
-Uniqueness spans every player in the game, active or inactive: an inactive player still holds its email, so it can not be reused.
+Within a single game, each player **id** is unique. Uniqueness spans every player
+in the game, active or inactive: a removed player still holds its id, so it can
+not be reused.
 
-Players in different games are independent.
-The same email may appear in more than one game, and ids restart at `1` for each game.
+Players in different games are independent. Ids restart at `1` for each game. One
+[account]({{< relref "/reference/account.md" >}}) may hold a player seat in many
+games at once, each with its own id.
 
-## Password
+## Faction
 
-Each player has a **password**: a shared secret used to authenticate the player.
-
-- Generated when the player is created.
-- Stored in plain text.
-- Contains no characters that require escaping in JSON and none that could be
-  confused with an ASCII space.
-
-### Resetting a password
-
-A player's password can be **reset** — reissued — when the current one has been exposed.
+Every player commands exactly one [faction]({{< relref "/reference/faction.md" >}}):
+the in-game entity — its systems, the orders issued for it, and its turn report —
+that the player acts through.
 
 ## Randomness
 
@@ -74,4 +70,7 @@ Because a player's id never changes and is never reused (see [ID](#id) above), t
 
 ## See also
 
+- [Account]({{< relref "/reference/account.md" >}})
+- [Faction]({{< relref "/reference/faction.md" >}})
+- [Games]({{< relref "/reference/games.md" >}})
 - [Glossary]({{< relref "/reference/glossary.md" >}})

@@ -25,7 +25,7 @@ policy are placeholders to be filled in for your game.
 
 3. **Address the email.**
    Send the orders to the game's turn address with the subject your game uses to
-   identify your empire and the turn number.
+   identify your faction and the turn number.
 
    {{< callout type="info" >}}
    Fill in the exact address and subject-line format for your game here.

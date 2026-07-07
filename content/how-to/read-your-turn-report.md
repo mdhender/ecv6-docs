@@ -20,7 +20,7 @@ filled in once the report format is documented.
    See [Turns]({{< relref "/reference/turns.md" >}}).
 
 2. **Review each section.**
-   Read through the report to see what your empire can observe this turn.
+   Read through the report to see what your faction can observe this turn.
 
    {{< callout type="info" >}}
    List and describe the report's sections here — what each one tells you and how

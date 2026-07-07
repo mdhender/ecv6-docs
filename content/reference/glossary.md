@@ -12,11 +12,22 @@ Definitions of terms used across the reference.
 **Flat-top**
 : The hex orientation used by the grid, with a flat edge at the top and bottom of each hex and north toward the top of the map.
 
+**Account**
+: A person's global identity across all of EC: the email and password used to log in.
+  Globally unique by email; the same account whether the person joins one game or many.
+  In each game, an account takes a [player]({{< relref "/reference/players.md" >}}) seat.
+  See [Account]({{< relref "/reference/account.md" >}}).
+
+**Faction**
+: The in-game entity a player commands in a game — its systems, the orders issued for it, and its turn report.
+  Each player commands exactly one faction.
+  See [Faction]({{< relref "/reference/faction.md" >}}).
+
 **Game**
-: The top-level unit of play; the cluster and the players belong to it.
+: The top-level unit of play; the cluster, the players, and their factions belong to it.
 
 **GM**
-: The game master; the operator who generates and runs a game.
+: The game master: a player whose GM flag is set, who generates and runs the game.
 
 **Master seed**
 : One of the two `uint64` values (`seed1`, `seed2`) saved for a game.
@@ -27,7 +38,9 @@ Definitions of terms used across the reference.
 : The center hex of the cluster, at axial coordinates `(0, 0)`.
 
 **Player**
-: A person participating in a game.
+: A person's seat in a single game: the per-game id, active state, GM flag, and the faction commanded.
+  A person's global identity — email and password — is their [account]({{< relref "/reference/account.md" >}}).
+  See [Players]({{< relref "/reference/players.md" >}}).
 
 **Turn**
 : The unit of play a game advances by.

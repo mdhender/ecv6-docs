@@ -1,6 +1,6 @@
 ---
 title: Determinism
-weight: 6
+weight: 7
 ---
 
 EC is deterministic: a game is fixed by its master seeds. The same seeds

@@ -4,7 +4,7 @@ weight: 1
 ---
 
 A **game** is the top-level unit of play.
-Everything else — the cluster, the players — belongs to a game.
+Everything else — the cluster, the players, and the factions they command — belongs to a game.
 
 ## Identity
 

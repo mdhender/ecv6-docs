@@ -24,11 +24,11 @@ You will need:
 ### 1. Join a game
 
 Request a position in an open game. You will receive a welcome email confirming
-your empire, your home system, and the turn schedule.
+your faction, your home system, and the turn schedule.
 
 ### 2. Read your first turn packet
 
-Each turn, the game emails you a report describing what your empire can see and
+Each turn, the game emails you a report describing what your faction can see and
 do. Open it and skim the sections: your systems, your fleets, and the orders you
 may issue.
 

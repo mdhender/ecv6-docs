@@ -20,8 +20,10 @@ is, look here.
   {{< card link="games" title="Games" subtitle="The top-level unit of play: id, master seeds, and current turn." >}}
   {{< card link="turns" title="Turns" subtitle="Turn numbering and the per-turn lifecycle of orders and reports." >}}
   {{< card link="cluster" title="Cluster" subtitle="The hex map, its coordinates, and the systems it holds." >}}
-  {{< card link="players" title="Players" subtitle="Player identity, active state, passwords, and per-player randomness." >}}
-  {{< card link="determinism" title="Determinism" subtitle="Master seeds, streams, and key paths that make a game reproducible." >}}
+  {{< card link="account" title="Account" subtitle="Your global login: email and password, shared across every game." >}}
+  {{< card link="players" title="Players" subtitle="The per-game seat: id, active state, and the faction commanded." >}}
+  {{< card link="faction" title="Faction" subtitle="The in-game entity a player commands: systems, orders, and reports." >}}
+  {{< card link="determinism" title="Determinism" subtitle="Master seeds and order independence that make a game reproducible." >}}
   {{< card link="orders" title="Orders" subtitle="The syntax of the instructions a player issues each turn." >}}
   {{< card link="glossary" title="Glossary" subtitle="Definitions of terms used across the reference." >}}
 {{< /cards >}}
