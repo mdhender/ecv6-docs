@@ -6,8 +6,8 @@ weight: 4
 An **account** is a person's identity across all of Epimethean Challenge. There
 is one account per person: it holds the email and password you log in with, and
 it is the same whether you join a single game or many. In each game you join,
-your account takes a seat as a [player]({{< relref "/reference/players.md" >}})
-commanding a [faction]({{< relref "/reference/faction.md" >}}).
+your account takes a seat as a [player]({{< relref "/reference/players.md" >}}) and
+founds a [faction]({{< relref "/reference/faction.md" >}}) to command.
 
 The account is where your *global* identity lives. Anything specific to one game
 — a per-game id, active state, the faction you command — belongs to the player
@@ -47,9 +47,10 @@ a faction.*
   your email and password.
 - In each game, your account takes a [player]({{< relref "/reference/players.md" >}})
   seat — the per-game id, active state, and GM flag live there.
-- Each player commands one [faction]({{< relref "/reference/faction.md" >}}), the
-  in-game entity that acts within the game — except the game's GM, a player who
-  runs the game and commands no faction.
+- Each player **founds** and commands one [faction]({{< relref "/reference/faction.md" >}}),
+  the in-game entity that acts within the game — except the game's GM, who runs the
+  game and commands none. A player who leaves the game stops commanding their
+  faction; the faction stays in the game as an independent.
 
 ## See also
 

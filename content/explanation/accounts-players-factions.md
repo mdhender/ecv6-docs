@@ -7,7 +7,7 @@ Epimethean Challenge (EC) keeps three ideas apart that games often blur together
 *who you are*, *your place in a particular game*, and *the thing you command
 there*. They are the **account**, the **player**, and the **faction**. One
 sentence holds them together: *your account lets you log in; in each game you join
-you are a player commanding a faction.*
+you take a player's seat and found a faction to command.*
 
 It is tempting to collapse all three into a single word — most people would just
 call the whole bundle "the player." EC pulls them apart on purpose, because each
@@ -33,6 +33,14 @@ the game* — the power that holds systems, has orders issued for it, and receiv
 turn report. It is the piece other players see and contend with. Where the player
 is your seat, the faction is what that seat reaches out and does. A faction, too,
 belongs to exactly one game; it is meaningless outside it.
+
+A faction is not handed to you the moment you sit down. After joining, you *found*
+your faction as a setup step — until then your seat commands nothing, and the
+GM's seat never commands anything at all. Once founded, a faction is durable: it
+can be ground down to nothing and still exist, and if you leave the game it does
+not vanish with you but carries on **independent**, with no commanding player, for
+others to encounter. The bond between a player and a faction is real but not
+eternal — it begins at founding and ends when the player departs.
 
 Separating the three is what dissolves an old confusion. The account holds the
 global identity; the player holds the per-game identity and state; the faction

@@ -20,7 +20,8 @@ Definitions of terms used across the reference.
 
 **Faction**
 : The in-game entity a player commands in a game — its systems, the orders issued for it, and its turn report.
-  A faction is commanded by exactly one player; the game's GM commands none.
+  Founded by a player during setup and commanded by at most one player; a faction with no commanding player is **independent**.
+  A founded faction persists — it may be reduced to nothing and still remain, and it outlives the departure of its player.
   See [Faction]({{< relref "/reference/faction.md" >}}).
 
 **Game**
@@ -28,6 +29,11 @@ Definitions of terms used across the reference.
 
 **GM**
 : The game master: a player whose GM flag is set, who runs the game and commands no faction.
+
+**Independent**
+: A [faction]({{< relref "/reference/faction.md" >}}) with no commanding player.
+  A faction becomes independent when the player commanding it leaves the game; other players still encounter and contend with it.
+  See [Faction]({{< relref "/reference/faction.md" >}}).
 
 **Master seed**
 : One of the two `uint64` values (`seed1`, `seed2`) saved for a game.

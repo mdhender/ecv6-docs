@@ -5,9 +5,9 @@ weight: 5
 
 A **player** is a person's seat in a single game. When an
 [account]({{< relref "/reference/account.md" >}}) joins a game it takes a player
-seat there; the player belongs to exactly one game and, unless they are the
-game's GM, commands one [faction]({{< relref "/reference/faction.md" >}}). Each
-game has its own set of players.
+seat there; the player belongs to exactly one game. After joining, a player
+**founds** and commands one [faction]({{< relref "/reference/faction.md" >}}) —
+except the game's GM, who commands none. Each game has its own set of players.
 
 Your *global* identity — your email and password — lives on your
 [account]({{< relref "/reference/account.md" >}}), not on the player. What the
@@ -44,6 +44,11 @@ Because the record is retained, the player's id is never freed or reused, matchi
 the id rule above. A removed player's id stays assigned to that player (see
 [Uniqueness and scope](#uniqueness-and-scope)).
 
+Removing a player ends their command of their
+[faction]({{< relref "/reference/faction.md" >}}), but does not remove the faction:
+it becomes **independent** — a faction with no commanding player — and stays in the
+game.
+
 ## Uniqueness and scope
 
 Within a single game, each player **id** is unique. Uniqueness spans every player
@@ -56,9 +61,14 @@ games at once, each with its own id.
 
 ## Faction
 
-Almost every player commands exactly one [faction]({{< relref "/reference/faction.md" >}}):
+A player **founds** and commands one [faction]({{< relref "/reference/faction.md" >}}):
 the in-game entity — its systems, the orders issued for it, and its turn report —
-that the player acts through.
+that the player acts through. Founding is a setup step; a newly joined player
+commands no faction until they found one, and the game's GM commands none at all.
+
+A faction outlives the player's command of it. When a player is removed (see
+[Active state](#active-state)), their faction is not removed with them — it becomes
+**independent**. See [Faction]({{< relref "/reference/faction.md" >}}).
 
 ## Game master
 

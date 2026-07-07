@@ -4,13 +4,12 @@ weight: 6
 ---
 
 A **faction** is the in-game power a player commands. A faction belongs to exactly
-one game and is commanded by exactly one [player]({{< relref "/reference/players.md" >}})
-— the person's seat in that game. Where the *player* is the seat, the *faction* is
-what that seat acts through: it holds systems, it is what orders are issued for,
-and it is what a turn report describes.
-
-(Not every player commands a faction: the game's GM runs the game and commands
-none. See [Players]({{< relref "/reference/players.md" >}}#game-master).)
+one game and is commanded by **at most one**
+[player]({{< relref "/reference/players.md" >}}) — the person's seat in that game.
+A faction with no commanding player is **independent**. Where a player does command
+a faction, the *player* is the seat and the *faction* is what that seat acts
+through: it holds systems, it is what orders are issued for, and it is what a turn
+report describes.
 
 {{< callout type="info" >}}
 This page is a stub. It fixes the vocabulary — *faction* is the in-game entity a
@@ -24,6 +23,33 @@ documented as each subsystem is settled.
 - The **orders** submitted for it each turn (see [Orders]({{< relref "/reference/orders.md" >}})).
 - The **turn report** describing what it can observe (see [Turns]({{< relref "/reference/turns.md" >}})).
 
+## Founding
+
+A faction does not exist until a player founds it. A new
+[player]({{< relref "/reference/players.md" >}}) arrives commanding no faction;
+**founding** a faction is a setup step they take after joining the game. Until they
+found one they command none — as does the game's GM, permanently.
+
+## Independence
+
+A faction may have **no commanding player**. Such a faction is **independent**.
+Independent factions are part of the game that other players encounter and contend
+with, no less than player-commanded ones.
+
+A faction becomes independent when the player commanding it leaves the game (see
+[Persistence](#persistence)).
+
+## Persistence
+
+Once founded, a faction **never disappears**. It may be reduced to nothing — zero
+systems, zero holdings — and it still remains in the game.
+
+When the [player]({{< relref "/reference/players.md" >}}) commanding a faction is
+removed (marked inactive), that ends their *command* of the faction, not the
+faction itself: the faction becomes **independent** and stays in the game. Command
+of a faction can begin (at founding) and end (on the player's departure); the
+faction persists through both.
+
 ## Governments
 
 A faction governs through one or more **governments** — which may be empires,
@@ -34,12 +60,12 @@ The kinds of government, and what they change about how a faction is run, will b
 described here once those rules are settled.
 {{< /callout >}}
 
-## Player and faction
+## Reaching a faction
 
-A faction is commanded by exactly one player. The player is the person's seat; the
-faction is the entity they command. A person reaches a faction through their
-[account]({{< relref "/reference/account.md" >}}): the account takes a player seat
-in the game, and that player commands the faction.
+A person reaches a faction through their
+[account]({{< relref "/reference/account.md" >}}): the account takes a
+[player]({{< relref "/reference/players.md" >}}) seat in the game, and that player
+founds and commands the faction.
 
 ## See also
 
