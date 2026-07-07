@@ -1,9 +1,7 @@
 # Epimethean Challenge — Documentation
 
-Documentation site for **Epimethean Challenge (EC)**, a 4X, play-by-email,
-science-fantasy game. Built with [Hugo](https://gohugo.io) and the
-[Hextra](https://imfing.github.io/hextra/) theme, and organized with the
-[Diátaxis](https://diataxis.fr) framework.
+Documentation site for **Epimethean Challenge (EC)**, a 4X, play-by-email, science-fantasy game.
+Built with [Hugo](https://gohugo.io) and the [Hextra](https://imfing.github.io/hextra/) theme, and organized with the [Diátaxis](https://diataxis.fr) framework.
 
 Production site: <https://ecv6.pbbgaming.com>
 
@@ -28,12 +26,19 @@ hugo --gc --minify    # output written to ./public
 ## Content structure (Diátaxis)
 
 | Directory            | Type        | Purpose                                   |
-| -------------------- | ----------- | ----------------------------------------- |
+| -------------------- | ----------- |-------------------------------------------|
 | `content/tutorials`  | Tutorial    | Learning-oriented, guided lessons         |
 | `content/how-to`     | How-to      | Task-oriented recipes for a specific goal |
-| `content/reference`  | Reference   | Information-oriented technical specs       |
-| `content/explanation`| Explanation | Understanding-oriented discussion          |
+| `content/reference`  | Reference   | Information-oriented technical specs      |
+| `content/explanation`| Explanation | Understanding-oriented discussion         |
 
-Add a page by creating a Markdown file in the relevant directory, e.g.
-`content/how-to/submit-your-turn.md`. Use `weight:` in the front matter to order
-pages within a section.
+Add a page by creating a Markdown file in the relevant directory, e.g. `content/how-to/submit-your-turn.md`.
+Use `weight:` in the front matter to order pages within a section.
+
+## License
+
+Except where otherwise noted, Michael Henderson’s original documentation contributions in this repository are licensed under the Creative Commons Attribution 4.0 International License, CC BY 4.0.
+
+Original Empyrean Challenge materials and intellectual property are owned by James Colombo and are not licensed by this repository.
+
+See `LICENSE` and `NOTICE.md`.
