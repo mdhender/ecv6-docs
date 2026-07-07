@@ -23,8 +23,9 @@ You will need:
 
 ### 1. Join a game
 
-Request a position in an open game. You will receive a welcome email confirming
-your faction, your home system, and the turn schedule.
+Request a position in an open game. You will receive a welcome email with the
+steps to found your [faction]({{< relref "/reference/faction.md" >}}) — the power
+you command — along with your starting position and the turn schedule.
 
 ### 2. Read your first turn packet
 
