@@ -1,0 +1,77 @@
+# Epimethean Challenge (EC) — documentation site
+# Hugo + Hextra theme, organized with the Diátaxis framework.
+baseURL: https://ecv6.pbbgaming.com/
+title: Epimethean Challenge
+
+# Hextra ships as a Hugo Module.
+module:
+  imports:
+    - path: github.com/imfing/hextra
+
+enableRobotsTXT: true
+# Parse Git commit dates to enable "last updated" on pages.
+enableGitInfo: true
+
+# Allow raw HTML in Markdown (Hextra shortcodes rely on it).
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+  highlight:
+    noClasses: false
+
+defaultContentLanguage: en
+languages:
+  en:
+    label: English
+    weight: 1
+    title: Epimethean Challenge
+
+menu:
+  main:
+    - name: Tutorials
+      pageRef: /tutorials
+      weight: 1
+    - name: How-to Guides
+      pageRef: /how-to
+      weight: 2
+    - name: Reference
+      pageRef: /reference
+      weight: 3
+    - name: Explanation
+      pageRef: /explanation
+      weight: 4
+    - name: Search
+      weight: 5
+      params:
+        type: search
+    - name: GitHub
+      weight: 6
+      url: "https://github.com/mdhender/ecv6-docs"
+      params:
+        icon: github
+
+params:
+  description: >-
+    Player and referee documentation for Epimethean Challenge (EC), a 4X,
+    play-by-email science-fantasy game.
+
+  navbar:
+    displayTitle: true
+    displayLogo: false
+
+  footer:
+    enable: true
+    displayCopyright: true
+    displayPoweredBy: true
+
+  page:
+    width: normal
+
+  theme:
+    # Respect the reader's system preference; allow a manual toggle.
+    default: system
+    displayToggle: true
+
+  editURL:
+    enable: false
