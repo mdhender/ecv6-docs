@@ -8,6 +8,7 @@
 # Agent and IDE files
 .claude/
 .idea/
+*-prompt.md
 
 # Hugo build output
 /.hugo_build.lock
