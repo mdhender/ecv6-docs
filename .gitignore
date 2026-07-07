@@ -1,7 +1,18 @@
+*~
+*.gz
+*.swp
+*.tar
+*.tgz
+*.zip
+
+# Agent and IDE files
+.claude/
+.idea/
+
 # Hugo build output
+/.hugo_build.lock
 /public/
 /resources/_gen/
-/.hugo_build.lock
 
 # OS / editor cruft
 .DS_Store
