@@ -22,6 +22,8 @@ colony?"*
       subtitle="Work through the report you receive each turn and decide your orders." >}}
   {{< card link="reset-your-password" title="Reset your password"
       subtitle="Get a new password when your current one has been exposed." >}}
+  {{< card link="set-up-a-new-game" title="Set up a new game"
+      subtitle="For administrators and GMs: create a game, generate the cluster, recruit players, and start turn 1." >}}
 {{< /cards >}}
 
 More guides will be added as the game's systems are documented. Each one solves
