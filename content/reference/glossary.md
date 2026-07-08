@@ -10,7 +10,30 @@ Definitions of terms used across the reference.
   The origin is `(0, 0)`.
 
 **Flat-top**
-: The hex orientation used by the grid, with a flat edge at the top and bottom of each hex and north toward the top of the map.
+: The hex orientation used by the grid: each hex has a flat edge at its top and bottom and a point at its left and right.
+
+**Cluster radius**
+: How far from the [origin]({{< relref "/reference/cluster.md" >}}) a system may lie.
+  Calculated during cluster generation from the number of systems and the stellar density.
+  See [Cluster]({{< relref "/reference/cluster.md" >}}).
+
+**Direction vector**
+: An offset `(Δq, Δr)` added to a hex's coordinates to reach one of its six neighbors.
+  See [Cluster]({{< relref "/reference/cluster.md" >}}).
+
+**Minimum system spacing**
+: The smallest distance, in hexes, allowed between any two systems in a cluster.
+  Set by the stellar density during generation; a candidate hex closer than this to an existing system is not placed.
+  See [Cluster]({{< relref "/reference/cluster.md" >}}).
+
+**Stellar density**
+: A cluster-generation setting for how tightly systems are packed, from `extremely dense` to `very sparse`.
+  It sets the minimum system spacing.
+  See [Cluster]({{< relref "/reference/cluster.md" >}}).
+
+**System**
+: The contents of a single occupied hex in the [cluster]({{< relref "/reference/cluster.md" >}}), addressed by its axial coordinates `(q, r)`.
+  See [Cluster]({{< relref "/reference/cluster.md" >}}).
 
 **Account**
 : A person's global identity across all of EC: the email and password used to log in.
@@ -39,6 +62,11 @@ Definitions of terms used across the reference.
 : One of the two `uint64` values (`seed1`, `seed2`) saved for a game.
   Together they are the root of the game's randomness; each subsystem derives its own seeds from them.
   See [Determinism]({{< relref "/reference/determinism.md" >}}).
+
+**Natural resources**
+: The raw resources deposited on planets: **fuel** (`fuel`), **metals** (`mtls`), and **non-metals** (`nmtl`).
+  Each has a cluster-generation abundance setting — `poor`, `average`, or `rich` — that shapes the deposits placed during generation.
+  See [Cluster]({{< relref "/reference/cluster.md" >}}).
 
 **Origin**
 : The center hex of the cluster, at axial coordinates `(0, 0)`.
