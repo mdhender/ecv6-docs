@@ -63,6 +63,18 @@ Definitions of terms used across the reference.
   Together they are the root of the game's randomness; each subsystem derives its own seeds from them.
   See [Determinism]({{< relref "/reference/determinism.md" >}}).
 
+**Habitability**
+: A per-planet number rating how habitable a planet is; higher values are more habitable.
+  See [Cluster]({{< relref "/reference/cluster.md" >}}).
+
+**Orbit**
+: One of the ten positions in a system that holds a planet, numbered `1` to `10` from the innermost outward. An orbit may be empty.
+  See [Cluster]({{< relref "/reference/cluster.md" >}}).
+
+**Planet**
+: A body occupying an [orbit]({{< relref "/reference/glossary.md" >}}) in a system — rocky, gas giant, or asteroid belt — with a habitability and natural-resource deposits.
+  See [Cluster]({{< relref "/reference/cluster.md" >}}).
+
 **Natural resources**
 : The raw resources deposited on planets: **fuel** (`fuel`), **metals** (`mtls`), and **non-metals** (`nmtl`).
   Each has a cluster-generation abundance setting — `poor`, `average`, or `rich` — that shapes the deposits placed during generation.

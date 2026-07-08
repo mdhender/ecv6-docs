@@ -39,15 +39,54 @@ lower-right and upper-left.
 
 ## Systems
 
-A **system** is the contents of a single hex.
-Each system is addressed by its own coordinates `(q, r)`, and its contents are
-drawn from a stream keyed by those coordinates, independently of every other
-system.
-See [Determinism]({{< relref "/reference/determinism.md" >}}).
+A **system** is the contents of a single hex, addressed by its coordinates
+`(q, r)`. Each system's contents are drawn from a stream keyed by those
+coordinates, independently of every other system. A system holds ten **orbits**,
+numbered `1` to `10` from the innermost outward; each orbit holds one **planet**,
+or is **empty**. See [Determinism]({{< relref "/reference/determinism.md" >}}).
+
+{{< callout type="warning" >}}
+This version of the game is a **testbed**, and its system generator is deliberately
+simplistic: **every system is identical**. All systems have the same planets in the
+same orbits with the same habitability, described below. Only the natural-resource
+deposits (still to be documented) are expected to vary from system to system.
+{{< /callout >}}
 
 {{< callout type="info" >}}
-The composition of a system — stars, planets, and other features — will be
-described here (or on its own page) once the generation rules are settled.
+Because every system is identical in this testbed, the generator does not draw from
+a system's stream. The stream is still created and keyed by the system's
+coordinates — it is simply not used yet. It is reserved for when system contents
+vary from system to system.
+{{< /callout >}}
+
+### Planets and habitability
+
+Every system contains the following, orbit by orbit:
+
+| Orbit | Planet          | Habitability |
+| ----- | --------------- | ------------ |
+| 1     | Rocky           | 0            |
+| 2     | Rocky           | 1            |
+| 3     | Rocky           | 20           |
+| 4     | Asteroid belt   | 0            |
+| 5     | *(empty)*       | 0            |
+| 6     | Gas giant       | 10           |
+| 7     | Gas giant       | 0            |
+| 8     | Gas giant       | 0            |
+| 9     | Asteroid belt   | 0            |
+| 10    | *(empty)*       | 0            |
+
+**Habitability** is a per-planet number; higher values are more habitable. In every
+system, the rocky planet in orbit `3` (habitability `20`) is the most habitable.
+
+### Deposits
+
+Each planet also carries **natural-resource deposits** — fuel, metals, and
+non-metals — shaped by the cluster's [abundance settings](#settings).
+
+{{< callout type="info" >}}
+The quantity, quality, and type of deposits a planet carries are still to be
+documented.
 {{< /callout >}}
 
 ## Generation
@@ -105,11 +144,10 @@ If the list is exhausted before enough systems are placed, **generation fails an
 no cluster is created** — the requested number of systems does not fit at the
 chosen density. The GM must change the settings and generate again.
 
-{{< callout type="info" >}}
-What happens once enough systems have been placed — how each system is then
-populated, including the natural resource deposits governed by the three abundance
-settings — is still to be documented.
-{{< /callout >}}
+Once enough systems have been placed, each is populated with its planets. In this
+testbed version every system gets the same fixed layout — see
+[Systems](#systems) — so this step adds only the natural-resource deposits, which
+are still to be documented.
 
 ### Reproducibility
 
