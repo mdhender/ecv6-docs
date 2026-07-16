@@ -21,18 +21,30 @@ generated. Current values may change during play; initial values do not.
 
 ## Settings
 
-Genesis Deposits has one setting for each resource:
+Genesis Deposits takes two GM-provided settings for each resource: an
+**abundance** knob and a **baseline endowment**.
 
-| Setting                       | Default   | Allowed values            |
-| ----------------------------- | --------- | ------------------------- |
-| Fuel abundance (`fuel`)       | `average` | `poor`, `average`, `rich` |
-| Metals abundance (`mtls`)     | `average` | `poor`, `average`, `rich` |
-| Non-metals abundance (`nmtl`) | `average` | `poor`, `average`, `rich` |
+| Setting                       | Default         | Allowed values            |
+| ----------------------------- | --------------- | ------------------------- |
+| Fuel abundance (`fuel`)       | `average`       | `poor`, `average`, `rich` |
+| Metals abundance (`mtls`)     | `average`       | `poor`, `average`, `rich` |
+| Non-metals abundance (`nmtl`) | `average`       | `poor`, `average`, `rich` |
+| Fuel endowment (`Af`)         | `4,891,250,000` | any positive amount       |
+| Metals endowment (`Am`)       | `4,891,250,000` | any positive amount       |
+| Non-metals endowment (`An`)   | `4,891,250,000` | any positive amount       |
 
-Each setting affects only deposits of its resource. It adjusts both the final
-quantity and final yield of each deposit, using a separate roll for each value.
-It does not change the system endowment, planet shares, number of deposits, or
-deposit weights.
+Each **abundance** setting affects only deposits of its resource. It adjusts both
+the final quantity and final yield of each deposit, using a separate roll for each
+value. It does not change the system endowment, planet shares, number of deposits,
+or deposit weights.
+
+Each **endowment** setting is the resource's ten-planet baseline amount, described
+under [System endowments](#system-endowments). The default is the same for all
+three resources; the factored form carries the intended meaning:
+
+```text
+Af = Am = An = 6.5 × 17.5 × 43,000,000 = 4,891,250,000
+```
 
 ## Exact processing order
 
@@ -58,7 +70,8 @@ for the entire system before starting the next:
 
 ## System endowments
 
-The ten-planet baseline endowments are represented by these constants:
+The ten-planet baseline endowments are the GM-provided settings `Af`, `Am`, and
+`An`:
 
 | Resource   | Ten-planet baseline |
 | ---------- | ------------------: |
@@ -77,10 +90,10 @@ system endowment = ten-planet baseline × P ÷ 10
 A ten-planet system therefore receives the complete baseline; a five-planet
 system receives half. The abundance settings do not change these endowments.
 
-{{< callout type="warning" >}}
-The quantities represented by `Af`, `Am`, and `An` have not yet been settled. They
-remain placeholders while this generator is draft.
-{{< /callout >}}
+`Af`, `Am`, and `An` are supplied per game, exactly like the abundance knobs, the
+number of systems, stellar density, and minimum spacing. A GM may raise or lower
+any of them to make a game more or less resource-rich. Left unset, each takes the
+default endowment from [Settings](#settings).
 
 Keep endowments and every quantity derived from them as fractional values. Do not
 round during system, planet, or deposit allocation. Quantity is rounded only after
@@ -259,13 +272,11 @@ yield adjustment on a planet with habitability `22`, its habitability penalty is
 
 ## Worked example: a three-planet system
 
-This example uses the default `average` setting for all three resources and these
-temporary baseline values:
+This example uses the default `average` abundance setting and the default
+endowment for all three resources:
 
 ```text
-Af = 1,000,000
-Am = 1,000,000
-An = 1,000,000
+Af = Am = An = 4,891,250,000
 ```
 
 The system has the three planets assigned by Genesis System Contents:
@@ -282,9 +293,9 @@ Because the system has three planets, each resource receives `3 ÷ 10` of its
 ten-planet baseline:
 
 ```text
-Fuel endowment       = 1,000,000 × 3 ÷ 10 = 300,000
-Metals endowment     = 1,000,000 × 3 ÷ 10 = 300,000
-Non-metals endowment = 1,000,000 × 3 ÷ 10 = 300,000
+Fuel endowment       = 4,891,250,000 × 3 ÷ 10 = 1,467,375,000
+Metals endowment     = 4,891,250,000 × 3 ÷ 10 = 1,467,375,000
+Non-metals endowment = 4,891,250,000 × 3 ÷ 10 = 1,467,375,000
 ```
 
 The share rolls, shown in each planet's processing order, are:
@@ -300,9 +311,9 @@ shares. Applying those shares gives:
 
 | Planet          | Fuel                         | Metals                   | Non-metals                    |
 | --------------- | ---------------------------: | -----------------------: | -----------------------------: |
-| Rocky           | `300,000 × 6/11` = `163,636.36…` | `300,000 × 3/10` = `90,000` | `300,000 × 1/9` = `33,333.33…` |
-| Asteroid belt   | `300,000 × 1/11` = `27,272.72…`  | `300,000 × 7/10` = `210,000` | `300,000 × 3/9` = `100,000`    |
-| Gas giant       | `300,000 × 4/11` = `109,090.90…` | `0`                           | `300,000 × 5/9` = `166,666.66…` |
+| Rocky           | `1,467,375,000 × 6/11` = `800,386,363.63…` | `1,467,375,000 × 3/10` = `440,212,500`   | `1,467,375,000 × 1/9` = `163,041,666.66…` |
+| Asteroid belt   | `1,467,375,000 × 1/11` = `133,397,727.27…` | `1,467,375,000 × 7/10` = `1,027,162,500` | `1,467,375,000 × 3/9` = `489,125,000`     |
+| Gas giant       | `1,467,375,000 × 4/11` = `533,590,909.09…` | `0`                                      | `1,467,375,000 × 5/9` = `815,208,333.33…` |
 
 The displayed decimals are abbreviated. Generation retains the exact fractional
 values.
@@ -339,14 +350,14 @@ Their base quantities and independent `average` quantity adjustments are:
 
 | Planet          | Base quantity calculation                 | Adjustment roll       | Final quantity |
 | --------------- | ----------------------------------------- | --------------------- | -------------: |
-| Rocky           | `163,636.36… × 8/98 = 13,358.07…`         | `8 + 9 - 13 = +4%`    |         `13,892` |
-| Asteroid belt   | `210,000 × 10/147 = 14,285.71…`           | `5 + 6 - 13 = -2%`    |         `14,000` |
-| Gas giant       | `166,666.66… × 6/140 = 7,142.85…`         | `7 + 7 - 13 = +1%`    |          `7,214` |
+| Rocky           | `800,386,363.63… × 8/98 = 65,337,662.33…` | `8 + 9 - 13 = +4%`    |     `67,951,168` |
+| Asteroid belt   | `1,027,162,500 × 10/147 = 69,875,000`     | `5 + 6 - 13 = -2%`    |     `68,477,500` |
+| Gas giant       | `815,208,333.33… × 6/140 = 34,937,500`    | `7 + 7 - 13 = +1%`    |     `35,286,875` |
 
 For example, the rocky planet's selected fuel deposit finishes at:
 
 ```text
-floor(13,358.07… × 1.04) = 13,892
+floor(65,337,662.33… × 1.04) = 67,951,168
 ```
 
 Finally, each selected deposit makes a separate `average` yield-adjustment roll:
