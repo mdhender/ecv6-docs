@@ -5,149 +5,394 @@ weight: 3
 
 **Genesis Deposits** — status **draft**, version **v1**.
 
-The deposit generator decides **how many deposits each planet carries, and each
-deposit's quantity and yield**. It runs last, and is given only a planet's
-**type** and **orbit** by the
-[system-contents generator]({{< relref "/reference/generators/genesis/system-contents.md" >}}).
+The deposit generator decides **which natural resources occur on each planet and
+the quantity and yield of every deposit**. It runs after
+[system contents]({{< relref "/reference/generators/genesis/system-contents.md" >}})
+and processes both the ordinary systems and the home-system template.
 
-Deposits are of three resources: **fuel** (`fuel`), **metals** (`mtls`), and
-**non-metals** (`nmtl`). Each deposit has a **quantity** (its starting amount) and
-a **yield** percentage.
+Deposits contain one of three resources: **fuel** (`fuel`), **metals** (`mtls`), or
+**non-metals** (`nmtl`). Each deposit has a quantity and a yield:
 
-{{< callout type="warning" >}}
-**Known gap: this generator ignores its own abundance settings.** The `fuel`,
-`mtls`, and `nmtl` settings below have **no effect** on any value on this page —
-setting metals to `rich` changes nothing. The values are fixed by planet type and
-orbit alone. A revised abundance model is designed and will land as a later
-version; until it does, the settings are inert. See
-[Abundance settings](#abundance-settings).
-{{< /callout >}}
+- **Quantity** is the amount of raw material initially available.
+- **Yield** is the percentage of extracted material recovered as usable product.
 
-## Deposits by orbit
+For both values, a deposit's initial and current values are identical when it is
+generated. Current values may change during play; initial values do not.
 
-The deposits every planet carries, orbit by orbit. `n @ y%` means `n` deposits at
-yield `y%`; each carries the row's per-deposit quantity. Empty orbits carry none.
+## Settings
 
-Because [every system is identical]({{< relref "/reference/generators/genesis/system-contents.md" >}}),
-this is the deposit map of **every system in the cluster**.
+Genesis Deposits has one setting for each resource:
 
-| Orbit | Planet        | Qty / deposit |   Fuel |  Metals | Non-metals |
-| ----- | ------------- | ------------: | -----: | ------: | ---------: |
-| 1     | Rocky         |    33,333,334 | 1 @ 2% |  1 @ 3% |     1 @ 3% |
-| 2     | Rocky         |    33,333,334 | 1 @ 2% |  1 @ 3% |     1 @ 3% |
-| 3     | Rocky         |    33,333,334 | 1 @ 2% |  1 @ 3% |     1 @ 3% |
-| 4     | Asteroid belt |    16,666,667 | 1 @ 2% |  3 @ 3% |     2 @ 3% |
-| 5     | *(empty)*     |             — |      — |       — |          — |
-| 6     | Gas giant     |    16,666,667 | 3 @ 3% |  1 @ 5% |     2 @ 6% |
-| 7     | Gas giant     |    16,666,667 | 3 @ 3% |  1 @ 5% |     2 @ 6% |
-| 8     | Gas giant     |    16,666,667 | 3 @ 2% |  1 @ 3% |     2 @ 3% |
-| 9     | Asteroid belt |    16,666,667 | 1 @ 1% |  3 @ 2% |     2 @ 2% |
-| 10    | *(empty)*     |             — |      — |       — |          — |
+| Setting                       | Default   | Allowed values            |
+| ----------------------------- | --------- | ------------------------- |
+| Fuel abundance (`fuel`)       | `average` | `poor`, `average`, `rich` |
+| Metals abundance (`mtls`)     | `average` | `poor`, `average`, `rich` |
+| Non-metals abundance (`nmtl`) | `average` | `poor`, `average`, `rich` |
 
-**The gas giants in orbits 6 and 7 are the best deposits in the system.** They are
-the only planets whose yields are not halved, so they carry the full `5%` metals
-and `6%` non-metals — while the identical gas giant in orbit `8` yields `3%` on
-both. Orbit `9`'s asteroid belt is the worst, halved twice to `1–2%`.
+Each setting affects only deposits of its resource. It adjusts both the final
+quantity and final yield of each deposit, using a separate roll for each value.
+It does not change the system endowment, planet shares, number of deposits, or
+deposit weights.
 
-Note that the most *habitable* planet — the rocky planet in orbit `3`
-([habitability `20`]({{< relref "/reference/generators/genesis/system-contents.md" >}})) —
-is not the best planet for extraction; its yields are halved, and it carries only
-three deposits.
+## Exact processing order
 
-## System-wide totals
+Within a system, process planets in ascending orbit order. Whenever resources are
+processed for a planet, use the order for that planet's type:
 
-Summing every deposit across the ten orbits — identical in every system — gives the
-system's starting resource totals. Totals are not round because the per-planet
-`100,000,000` is divided with round-up (see [Quantity](#quantity)).
+| Planet type   | First      | Second     | Third      |
+| ------------- | ---------- | ---------- | ---------- |
+| Rocky         | Fuel       | Metals     | Non-metals |
+| Asteroid belt | Metals     | Non-metals | Fuel       |
+| Gas giant     | Non-metals | Fuel       | Metals     |
 
-| Resource       | Deposits | Total quantity  |
-| -------------- | -------: | --------------: |
-| Fuel           |       14 |     283,333,339 |
-| Metals         |       12 |     250,000,005 |
-| Non-metals     |       13 |     266,666,672 |
-| **Total**      |   **39** | **800,000,016** |
+Within a resource, process deposits in their creation order. Complete each phase
+for the entire system before starting the next:
 
-## How the values are set
+1. Determine system endowments.
+2. Roll planet shares and distribute each endowment among the planets.
+3. Roll each planet's deposit count.
+4. Assign its deposit slots to resources and create the deposits.
+5. Roll deposit weights and calculate base quantities.
+6. Roll and apply final quantity adjustments.
+7. Roll and apply yield adjustments and habitability penalties.
 
-### Deposit counts by planet type
+## System endowments
 
-The planet's type fixes how many deposits of each resource it carries.
+The ten-planet baseline endowments are represented by these constants:
 
-| Planet type   | Fuel | Metals | Non-metals | Total deposits |
-| ------------- | ---: | -----: | ---------: | -------------: |
-| Rocky         |    1 |      1 |          1 |              3 |
-| Asteroid belt |    1 |      3 |          2 |              6 |
-| Gas giant     |    3 |      1 |          2 |              6 |
+| Resource   | Ten-planet baseline |
+| ---------- | ------------------: |
+| Fuel       |                `Af` |
+| Metals     |                `Am` |
+| Non-metals |                `An` |
 
-### Quantity
+The names mean **Amount of Fuel**, **Amount of Metals**, and **Amount of
+Non-metals**. For a system containing `P` planets, each resource's system
+endowment is:
 
-Every deposit on a planet starts at the same quantity: **100,000,000 divided by the
-total number of deposits on that planet, rounded up.**
+```text
+system endowment = ten-planet baseline × P ÷ 10
+```
 
-- Rocky (3 deposits): `⌈100,000,000 / 3⌉` = **33,333,334** each.
-- Asteroid belt or gas giant (6 deposits): `⌈100,000,000 / 6⌉` = **16,666,667** each.
-
-Every planet therefore holds about the same total quantity; the type decides how
-that total is split, and among which resources.
-
-### Yield
-
-Each deposit's yield is set by its resource, then reduced by orbit and planet type.
-All halving rounds up (`⌈x / 2⌉`).
-
-1. **Base yield** by resource:
-
-   | Resource   | Base yield |
-   | ---------- | ---------: |
-   | Fuel       |         3% |
-   | Metals     |         5% |
-   | Non-metals |         6% |
-
-2. **If the planet is in orbit `1`, `2`, `3`, `8`, `9`, or `10`, halve the yield.**
-   Orbits `4`, `5`, `6`, and `7` are not halved.
-3. **If the planet is an asteroid belt, halve the yield again.**
-
-Steps 2 and 3 are cumulative, so an asteroid belt in a halved orbit is halved
-twice:
-
-| Case                                        | Halvings | Fuel | Metals | Non-metals |
-| ------------------------------------------- | -------: | ---: | -----: | ---------: |
-| Gas giant, orbit `6`–`7` (neither applies)  |        0 |   3% |     5% |         6% |
-| Rocky, orbit `1`–`3` (halved orbit)         |        1 |   2% |     3% |         3% |
-| Gas giant, orbit `8` (halved orbit)         |        1 |   2% |     3% |         3% |
-| Asteroid belt, orbit `4` (belt only)        |        1 |   2% |     3% |         3% |
-| Asteroid belt, orbit `9` (both apply)       |        2 |   1% |     2% |         2% |
-
-Because the halving rounds up, two halvings of metals give `⌈⌈5/2⌉/2⌉ = 2%`, not
-`1%`.
-
-## Abundance settings
-
-| Setting                       | Default   | Allowed values             |
-| ----------------------------- | --------- | -------------------------- |
-| Fuel abundance (`fuel`)       | `average` | `poor`, `average`, `rich`  |
-| Metals abundance (`mtls`)     | `average` | `poor`, `average`, `rich`  |
-| Non-metals abundance (`nmtl`) | `average` | `poor`, `average`, `rich`  |
-
-Each setting is intended to set how favorable that resource is across the cluster,
-from `poor` to `rich`.
+A ten-planet system therefore receives the complete baseline; a five-planet
+system receives half. The abundance settings do not change these endowments.
 
 {{< callout type="warning" >}}
-**At v1 these settings do nothing.** No value on this page depends on them. A GM
-may set them, and a game may record them, but the deposits generated are identical
-at `poor`, `average`, and `rich`. This is a known gap, not a rule of the game: the
-abundance model is being revised, and a later version of this generator will
-consume these settings. Do not plan around them.
+The quantities represented by `Af`, `Am`, and `An` have not yet been settled. They
+remain placeholders while this generator is draft.
 {{< /callout >}}
+
+Keep endowments and every quantity derived from them as fractional values. Do not
+round during system, planet, or deposit allocation. Quantity is rounded only after
+the final deposit adjustment.
+
+## Distributing resources among planets
+
+Every planet rolls **shares** of all three resources. The planet's affinity for a
+resource determines the roll:
+
+| Affinity | Shares roll |
+| -------- | ----------: |
+| High     |   `1d3 + 4` |
+| Normal   |   `1d3 + 1` |
+| Low      |   `1d3 - 1` |
+
+Clamp every result to `0–7` shares. Process planets and resources in the order
+defined under [Exact processing order](#exact-processing-order).
+
+Planet type determines affinity:
+
+| Planet type   | Fuel   | Metals | Non-metals |
+| ------------- | ------ | ------ | ---------- |
+| Rocky         | High   | Normal | Low        |
+| Asteroid belt | Low    | High   | Normal     |
+| Gas giant     | Normal | Low    | High       |
+
+After rolling every planet's shares, total the shares separately for fuel, metals,
+and non-metals.
+
+- If a resource has **zero total shares**, none of that resource occurs in the
+  system. Its endowment is not reassigned, and no deposits of that resource are
+  created.
+- Otherwise, each planet receives this fractional amount:
+
+```text
+planet resource amount =
+    system endowment × planet shares ÷ total system shares
+```
+
+A planet that rolled zero shares of a resource receives none of it.
+
+## Deposit counts
+
+After distributing all three resources, roll the total number of deposits on each
+planet in ascending orbit order:
+
+| Planet type   | Deposit count |
+| ------------- | ------------: |
+| Rocky         |        `4d10` |
+| Gas giant     |   `20 + 2d10` |
+| Asteroid belt |     `30 + d10` |
+
+This count covers all resources on the planet. It is not a separate count for
+each resource.
+
+## Assigning deposits to resources
+
+Process each planet's resources in its type-specific order:
+
+1. A resource is **present** when its planet resource amount is greater than zero.
+2. Reserve one deposit slot for every present resource.
+3. Distribute the remaining slots among the present resources in proportion to
+   their planet resource amounts.
+
+For the proportional distribution, calculate each resource's exact share of the
+remaining slots. Give it the whole-number portion first, then assign leftover
+slots in descending order of fractional remainder. Equal remainders favor the
+planet's resource order:
+
+| Planet type   | Equal-remainder priority        |
+| ------------- | ------------------------------- |
+| Rocky         | Fuel, Metals, Non-metals        |
+| Asteroid belt | Metals, Non-metals, Fuel        |
+| Gas giant     | Non-metals, Fuel, Metals        |
+
+Create the resulting deposits in that same resource order. Every deposit contains
+exactly one resource, and every resource present on the planet receives at least
+one deposit.
+
+## Deposit quantities
+
+### Base quantity
+
+For each resource present on a planet:
+
+1. Roll `2d6` as the weight of each of its deposits, in creation order.
+2. Add the weights of all deposits of that resource on the planet.
+3. Calculate each deposit's fractional base quantity:
+
+```text
+deposit base quantity =
+    planet resource amount × deposit weight ÷ total deposit weights
+```
+
+Do not round the base quantity.
+
+### Final quantity
+
+Each deposit makes an independent quantity-adjustment roll using the setting for
+its resource:
+
+| Setting   | Quantity adjustment |
+| --------- | ------------------: |
+| `rich`    |           `+3d20%` |
+| `average` |    `(2d12 - 13)%` |
+| `poor`    |           `-3d20%` |
+
+Percentage adjustments are relative: `+10%` multiplies a value by `1.10`, rather
+than adding ten units. Apply the adjustment to the fractional base quantity, then
+round down to a whole number:
+
+```text
+adjusted quantity = deposit base quantity × (1 + quantity adjustment)
+
+final quantity = max(1, floor(adjusted quantity))
+```
+
+The minimum of `1` guarantees that every created deposit has a positive quantity.
+Adjustments are not renormalized, so the sum of the final deposit quantities may
+differ from the system endowment.
+
+## Deposit yields
+
+### Base yield
+
+The deposit's resource determines its base yield:
+
+| Resource   | Base yield |
+| ---------- | ---------: |
+| Fuel       |         5% |
+| Metals     |        12% |
+| Non-metals |         9% |
+
+### Yield adjustment
+
+Each deposit makes a new, independent adjustment roll using the same resource
+setting that governs its quantity:
+
+| Setting   | Yield adjustment |
+| --------- | ---------------: |
+| `rich`    |        `+3d20%` |
+| `average` | `(2d12 - 13)%` |
+| `poor`    |        `-3d20%` |
+
+The quantity and yield rolls are independent: a deposit that rolls a high quantity
+adjustment does not necessarily roll a high yield adjustment.
+
+### Habitability penalty
+
+A planet with habitability `20` or less has no yield penalty. Above `20`, the
+penalty is `5%` for each additional point:
+
+```text
+habitability penalty = max(0, habitability - 20) × 5%
+```
+
+Combine the rolled adjustment and the penalty before applying them to base yield:
+
+```text
+net yield adjustment = yield adjustment - habitability penalty
+
+unrounded yield = base yield × (1 + net yield adjustment)
+```
+
+Keep the calculation fractional until this point. Round the result down to the
+nearest tenth of a percentage point, with a minimum yield of `0.1%`.
+
+For example, a metals deposit has a base yield of `12%`. If it rolls a `+10%`
+yield adjustment on a planet with habitability `22`, its habitability penalty is
+`10%`:
+
+```text
+12% × (1 + 10% - 10%) = 12%
+```
+
+## Worked example: a three-planet system
+
+This example uses the default `average` setting for all three resources and these
+temporary baseline values:
+
+```text
+Af = 1,000,000
+Am = 1,000,000
+An = 1,000,000
+```
+
+The system has the three planets assigned by Genesis System Contents:
+
+| Orbit | Planet          | Habitability |
+| ----: | --------------- | -----------: |
+| 3     | Rocky           |           24 |
+| 4     | Asteroid belt   |            0 |
+| 8     | Gas giant       |            8 |
+
+### Endowments and planet shares
+
+Because the system has three planets, each resource receives `3 ÷ 10` of its
+ten-planet baseline:
+
+```text
+Fuel endowment       = 1,000,000 × 3 ÷ 10 = 300,000
+Metals endowment     = 1,000,000 × 3 ÷ 10 = 300,000
+Non-metals endowment = 1,000,000 × 3 ÷ 10 = 300,000
+```
+
+The share rolls, shown in each planet's processing order, are:
+
+| Planet          | Share rolls in processing order                                      |
+| --------------- | -------------------------------------------------------------------- |
+| Rocky           | Fuel: `2 + 4 = 6`; Metals: `2 + 1 = 3`; Non-metals: `2 - 1 = 1` |
+| Asteroid belt   | Metals: `3 + 4 = 7`; Non-metals: `2 + 1 = 3`; Fuel: `2 - 1 = 1` |
+| Gas giant       | Non-metals: `1 + 4 = 5`; Fuel: `3 + 1 = 4`; Metals: `1 - 1 = 0` |
+
+The system totals are `11` fuel shares, `10` metals shares, and `9` non-metals
+shares. Applying those shares gives:
+
+| Planet          | Fuel                         | Metals                   | Non-metals                    |
+| --------------- | ---------------------------: | -----------------------: | -----------------------------: |
+| Rocky           | `300,000 × 6/11` = `163,636.36…` | `300,000 × 3/10` = `90,000` | `300,000 × 1/9` = `33,333.33…` |
+| Asteroid belt   | `300,000 × 1/11` = `27,272.72…`  | `300,000 × 7/10` = `210,000` | `300,000 × 3/9` = `100,000`    |
+| Gas giant       | `300,000 × 4/11` = `109,090.90…` | `0`                           | `300,000 × 5/9` = `166,666.66…` |
+
+The displayed decimals are abbreviated. Generation retains the exact fractional
+values.
+
+### Deposit counts and resource slots
+
+Suppose the deposit-count rolls and resulting slot assignments are:
+
+| Planet          | Deposit-count roll       | Deposits | Slots by resource                         |
+| --------------- | ------------------------ | -------: | ----------------------------------------- |
+| Rocky           | `5 + 6 + 7 + 8`          |       26 | 14 Fuel, 8 Metals, 4 Non-metals           |
+| Asteroid belt   | `30 + 5`                 |       35 | 21 Metals, 10 Non-metals, 4 Fuel          |
+| Gas giant       | `20 + 6 + 7`             |       33 | 20 Non-metals, 13 Fuel, 0 Metals          |
+
+The gas giant receives no metals deposits because it rolled zero metals shares.
+The other slot counts follow the proportional and largest-remainder rules above.
+
+### One deposit from each planet
+
+The generator creates every deposit, but this example follows only one deposit of
+the highest-affinity resource on each planet: fuel on the rocky planet, metals on
+the asteroid belt, and non-metals on the gas giant.
+
+After all deposits roll their `2d6` weights, suppose the selected deposits have
+these weights and resource-weight totals:
+
+| Planet          | Selected resource | Deposit weight | Total weight for that resource |
+| --------------- | ----------------- | -------------: | -----------------------------: |
+| Rocky           | Fuel              |              8 |                             98 |
+| Asteroid belt   | Metals            |             10 |                            147 |
+| Gas giant       | Non-metals        |              6 |                            140 |
+
+Their base quantities and independent `average` quantity adjustments are:
+
+| Planet          | Base quantity calculation                 | Adjustment roll       | Final quantity |
+| --------------- | ----------------------------------------- | --------------------- | -------------: |
+| Rocky           | `163,636.36… × 8/98 = 13,358.07…`         | `8 + 9 - 13 = +4%`    |         `13,892` |
+| Asteroid belt   | `210,000 × 10/147 = 14,285.71…`           | `5 + 6 - 13 = -2%`    |         `14,000` |
+| Gas giant       | `166,666.66… × 6/140 = 7,142.85…`         | `7 + 7 - 13 = +1%`    |          `7,214` |
+
+For example, the rocky planet's selected fuel deposit finishes at:
+
+```text
+floor(13,358.07… × 1.04) = 13,892
+```
+
+Finally, each selected deposit makes a separate `average` yield-adjustment roll:
+
+| Planet          | Resource   | Base yield | Yield roll            | Habitability penalty | Final yield |
+| --------------- | ---------- | ---------: | --------------------- | -------------------: | ----------: |
+| Rocky           | Fuel       |         5% | `10 + 8 - 13 = +5%`   |                  20% |        `4.2%` |
+| Asteroid belt   | Metals     |        12% | `8 + 8 - 13 = +3%`    |                   0% |       `12.3%` |
+| Gas giant       | Non-metals |         9% | `6 + 6 - 13 = -1%`    |                   0% |        `8.9%` |
+
+The rocky planet's habitability `24` gives a `20%` penalty, so its fuel yield is:
+
+```text
+5% × (1 + 5% - 20%) = 4.25%
+round down to 0.1% = 4.2%
+```
+
+## Home-system template
+
+The fixed home-system template from
+[Genesis System Contents]({{< relref "/reference/generators/genesis/system-contents.md" >}}#home-system-template)
+passes through all the rules above once. The completed template, including its
+deposits, is then copied unchanged whenever a player's home system is created.
+Deposit counts, quantities, and yields are not rerolled separately for each
+player.
+
+## Output guarantees
+
+Genesis Deposits guarantees that:
+
+- every deposit contains exactly one resource;
+- every resource present on a planet has at least one deposit;
+- every deposit has a positive whole-number initial quantity;
+- every deposit has an initial yield of at least `0.1%`, in increments of `0.1%`;
+- current quantity and yield initially equal their corresponding initial values;
+- quantities are completed before yields are rolled; and
+- every player receives the same completed home-system template.
 
 ## Determinism
 
-The values draw **no randomness**: given a planet's type and orbit, every value on
-this page is fixed. The same deposits appear in every system, in every game, at
-every setting. See [Determinism]({{< relref "/reference/determinism.md" >}}).
+Planet shares, deposit counts, deposit weights, quantities, and yields use random
+dice rolls. As with all EC generation, the same game seeds reproduce the same
+results. See [Determinism]({{< relref "/reference/determinism.md" >}}).
 
 ## See also
 
-- [Cluster]({{< relref "/reference/cluster.md" >}}) — what a deposit is
+- [Cluster]({{< relref "/reference/cluster.md" >}}) — planets, resources, deposits, quantities, and yields
 - [Genesis]({{< relref "/reference/generators/genesis" >}}) — the family this generator belongs to
-- [System contents]({{< relref "/reference/generators/genesis/system-contents.md" >}}) — the layout these deposits attach to
+- [System contents]({{< relref "/reference/generators/genesis/system-contents.md" >}}) — the systems and template processed here

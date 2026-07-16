@@ -24,6 +24,10 @@ Definitions of terms used across the reference.
   A [Genesis Placement]({{< relref "/reference/generators/genesis/placement.md" >}}) value, derived from the number of systems and the stellar density. Another placement generator need not have one.
   See [Placement]({{< relref "/reference/generators/genesis/placement.md" >}}).
 
+<a id="dice-notation"></a>
+**Dice notation**
+: `XdY` means roll `X` independent `Y`-sided dice and add the results. Each die produces a whole number from `1` through `Y`, inclusive. Apply any addition or subtraction after totaling the dice. For example, `3d4 - 2` produces a value from `1` through `10`.
+
 **Deposit**
 : A body of one natural resource on a planet, with a **quantity** (its starting amount) and a **yield** (the percentage recovered).
   A planet carries deposits of fuel, metals, and non-metals; how many, and with what quantity and yield, is set by the game's [deposit generator]({{< relref "/reference/generators" >}}).

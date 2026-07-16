@@ -5,67 +5,142 @@ weight: 2
 
 **Genesis System Contents** — status **draft**, version **v1**.
 
-The system-contents generator decides **which planet occupies each of a system's
-ten orbits, and how habitable it is**. It runs after
+The system-contents generator decides **which planets occupy a system's ten
+orbits, and how habitable each planet is**. It runs after
 [placement]({{< relref "/reference/generators/genesis/placement.md" >}}), and hands
-each planet's type and orbit to the
+the resulting systems and a fixed home-system template to the
 [deposit generator]({{< relref "/reference/generators/genesis/deposits.md" >}}).
 
-It has **no settings**: the layout below is fixed.
+It has **no settings**. Every ordinary system uses the same procedure, but its
+number of planets, occupied orbits, and habitability values may differ.
 
-## Every system is identical
+## Generating an ordinary system
 
-This generator gives **every system the same contents** — the same planets in the
-same orbits with the same habitability. Systems do not vary from one another at
-all, in any game, at any settings. Because
-[deposits]({{< relref "/reference/generators/genesis/deposits.md" >}}) are fixed by
-planet type and orbit, they do not vary either.
+Each system is generated independently in three steps:
 
-Systems therefore differ only in **where they sit**. Choosing where to expand is a
-question of position and distance, never of what a system contains.
+1. Roll the number of planets.
+2. Select the orbits they occupy.
+3. Determine each planet's type and habitability from its orbit.
 
-{{< callout type="warning" >}}
-This is a **testbed** generator, deliberately simplistic. Per-system variation is
-expected to arrive in a later version — and, because this generator is **draft**,
-its layout may change before any game depends on it.
+### Number of planets
+
+Roll `3d4 - 2`. The result is the system's number of planets, from `1` through
+`10`. See [Dice notation]({{< relref "/reference/glossary.md" >}}#dice-notation).
+
+### Occupied orbits
+
+Systems with one, two, or three planets use fixed orbits:
+
+| Planets | Occupied orbits |
+| ------: | --------------- |
+| 1       | `4`             |
+| 2       | `4`, `6`        |
+| 3       | `3`, `4`, `8`   |
+
+For a system with four or more planets:
+
+1. Make a list of the ten orbit numbers, `1` through `10`.
+2. Shuffle the list.
+3. Take one orbit from the start of the shuffled list for each planet.
+
+Each orbit appears only once in the list, so two planets cannot be assigned to the
+same orbit. For example, if a four-planet system's shuffled list begins
+`[10, 3, 9, 7, …]`, its planets occupy orbits `10`, `3`, `9`, and `7`.
+
+All orbits not selected by these rules are empty.
+
+### Planet type and base habitability
+
+An occupied orbit determines its planet's type and base habitability. Process
+occupied orbits in ascending numerical order, from orbit `1` toward orbit `10`.
+Roll and clamp each planet's habitability before processing the next occupied
+orbit.
+
+| Orbit | Planet          | Habitability |
+| ----- | --------------- | -----------: |
+| 1     | Rocky           |    `3d2 - 3` |
+| 2     | Rocky           |    `3d3 - 3` |
+| 3     | Rocky           |    `5d6 - 5` |
+| 4     | Asteroid belt   |            0 |
+| 5     | Rocky           |    `5d4 - 5` |
+| 6     | Gas giant       |    `2d8 - 2` |
+| 7     | Gas giant       |    `2d8 - 4` |
+| 8     | Gas giant       |    `2d8 - 8` |
+| 9     | Rocky           |   `2d8 - 12` |
+| 10    | Asteroid belt   |            0 |
+
+Clamp every rolled habitability to the range `0–25`, inclusive. Asteroid belts
+have habitability `0` and require no roll. Empty orbits have no planet and no
+habitability.
+
+## Minimum habitability for larger systems
+
+After generating all base habitability values, count the system's planets. A
+system with fewer than five planets receives no adjustment.
+
+For a system with at least five planets:
+
+1. Add the habitability of all its planets to find the system's **total
+   habitability**. Asteroid belts contribute `0`; empty orbits contribute nothing.
+2. Set the current orbit to `3`.
+3. While total habitability is less than `9`:
+   - If the current orbit contains a rocky planet or gas giant, add `2` to that
+     planet's habitability when it is in orbit `3` or `6`; otherwise add `1`.
+     Increase total habitability by the same amount.
+   - Advance to the next orbit.
+   - After orbit `10`, continue at orbit `2`.
+
+The orbit sequence is therefore `3, 4, 5, 6, 7, 8, 9, 10, 2, 3, …`. Empty orbits
+and asteroid belts receive no increase. An increase of `2` is applied in full, so
+the loop may raise a total of `8` to `10`. The resulting total is at least `9`, not
+necessarily exactly `9`.
+
+{{< callout type="info" >}}
+**Orbit `1` is intentionally skipped.** Even when orbit `1` contains a planet, the
+minimum-habitability adjustment never increases it.
 {{< /callout >}}
 
-## The per-orbit layout
+The loop always finishes. A system with at least five planets cannot consist only
+of asteroid belts because only orbits `4` and `10` contain belts.
 
-Every system has exactly this layout, from orbit `1` (innermost) to `10`
-(outermost). An orbit either holds one planet or is empty.
+## Home-system template
+
+In addition to the generated ordinary systems, Genesis System Contents produces
+one fixed **home-system template**. The template makes no random rolls and is the
+same for every player.
+
+When a player is added, the game overwrites the chosen system's ordinary contents
+with this template:
 
 | Orbit | Planet          | Habitability |
 | ----- | --------------- | -----------: |
 | 1     | Rocky           |            0 |
-| 2     | Rocky           |            1 |
-| 3     | Rocky           |           20 |
+| 2     | Rocky           |            3 |
+| 3     | Rocky           |           25 |
 | 4     | Asteroid belt   |            0 |
-| 5     | *(empty)*       |            — |
+| 5     | Rocky           |           15 |
 | 6     | Gas giant       |           10 |
 | 7     | Gas giant       |            0 |
 | 8     | Gas giant       |            0 |
-| 9     | Asteroid belt   |            0 |
-| 10    | *(empty)*       |            — |
+| 9     | Rocky           |            4 |
+| 10    | Asteroid belt   |            0 |
 
-Each system holds **eight planets**: three rocky, two asteroid belts, and three gas
-giants. Orbits `5` and `10` are always empty.
+This stage guarantees only the home planets' types, orbits, and habitability. The
+[deposit generator]({{< relref "/reference/generators/genesis/deposits.md" >}})
+adds deposits to the template before later stages use it; resource guarantees
+belong to that generator.
 
-**Habitability** is a per-planet number; higher values are more habitable. Three of
-the eight planets have a non-zero habitability:
+## Output
 
-| Orbit | Planet    | Habitability | Note                        |
-| ----- | --------- | -----------: | --------------------------- |
-| 3     | Rocky     |           20 | The most habitable planet.  |
-| 6     | Gas giant |           10 | The second most habitable.  |
-| 2     | Rocky     |            1 | Marginal.                   |
+Genesis System Contents returns:
 
-The remaining five planets have habitability `0`.
+- the planets and habitability values of every ordinary system; and
+- the fixed home-system template.
 
 ## Determinism
 
-The layout is fixed, so this generator **draws no randomness**: given an orbit, the
-planet and its habitability are the same in every system of every game. See
+Planet counts, shuffled orbits, and habitability use random dice rolls. As with all
+EC generation, the same game seeds reproduce the same results. See
 [Determinism]({{< relref "/reference/determinism.md" >}}).
 
 ## See also
