@@ -58,6 +58,13 @@ as it lands.
    setup, and derives its own seeds from the game's, so it is reproducible and
    order-independent (see [Determinism]({{< relref "/reference/determinism.md" >}})).
 
+   Generation runs in three stages — placement, system contents, and deposits — and
+   you choose a **generator** for each, along with its settings. This version ships
+   the [Genesis]({{< relref "/reference/generators/genesis" >}}) family; its
+   settings, and the map they produce, are documented under
+   [Generators]({{< relref "/reference/generators" >}}). Record which generators and
+   versions you ran: players need them to know which rules built their cluster.
+
 5. **Prepare home systems.**
    Decide where the players will start:
 
