@@ -43,17 +43,14 @@ settings list — each setting belongs to the generator that reads it.
 | Metals abundance (`mtls`)     | `average` | [Deposits]({{< relref "/reference/generators/genesis/deposits.md" >}})         |
 | Non-metals abundance (`nmtl`) | `average` | [Deposits]({{< relref "/reference/generators/genesis/deposits.md" >}})         |
 
-Genesis System Contents has no settings: its layout is fixed.
+Genesis System Contents has no settings: every system uses the same generator.
 
 ## What Genesis produces
 
-At v1, Genesis varies **only where systems sit**. Placement draws the map from the
-game's seeds, so the hexes systems occupy differ from game to game. Every system's
-contents are then identical — the same planets in the same orbits with the same
-habitability, carrying the same deposits — in every system of every game.
-
-So in a Genesis v1 game, a system is worth exactly what its **position** is worth.
-Systems differ from one another in nothing else.
+At v1, Genesis varies both **where systems sit** and **what they contain**.
+Placement draws the map from the game's seeds. Genesis System Contents then uses
+the same generator for every ordinary system, producing different planet counts,
+occupied orbits, and habitability values through random rolls.
 
 {{< cards >}}
   {{< card link="placement" title="Placement" subtitle="How many systems, how large the map, and which hexes they occupy." >}}
