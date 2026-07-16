@@ -13,7 +13,7 @@ Definitions of terms used across the reference.
 
 **Average nearest neighbor**
 : The expected distance, in hexes, from a system to its closest neighbor. A *local* density metric — the "crowdedness" a player feels while exploring.
-  See [Cluster]({{< relref "/reference/cluster.md" >}}).
+  See [Placement]({{< relref "/reference/generators/genesis/placement.md" >}}).
 
 **Axial coordinates**
 : The coordinate system used to report hex positions, written `(q, r)`.
@@ -21,7 +21,12 @@ Definitions of terms used across the reference.
 
 **Cluster radius**
 : How far from the [origin]({{< relref "/reference/cluster.md" >}}) a system may lie.
-  Calculated during cluster generation from the number of systems and the stellar density.
+  A [Genesis Placement]({{< relref "/reference/generators/genesis/placement.md" >}}) value, derived from the number of systems and the stellar density. Another placement generator need not have one.
+  See [Placement]({{< relref "/reference/generators/genesis/placement.md" >}}).
+
+**Deposit**
+: A body of one natural resource on a planet, with a **quantity** (its starting amount) and a **yield** (the percentage recovered).
+  A planet carries deposits of fuel, metals, and non-metals; how many, and with what quantity and yield, is set by the game's [deposit generator]({{< relref "/reference/generators" >}}).
   See [Cluster]({{< relref "/reference/cluster.md" >}}).
 
 **Direction vector**
@@ -40,6 +45,11 @@ Definitions of terms used across the reference.
 **Game**
 : The top-level unit of play; the cluster, the players, and their factions belong to it.
 
+**Generator**
+: The rules that build one stage of the [cluster]({{< relref "/reference/cluster.md" >}}) at setup — placement, system contents, or deposits.
+  The GM chooses one generator per stage, each with its own settings and its own version; a game records all three. Generators are grouped into **families**, such as [Genesis]({{< relref "/reference/generators/genesis" >}}); a family name is not a version.
+  See [Generators]({{< relref "/reference/generators" >}}).
+
 **GM**
 : The game master: a player whose GM flag is set, who runs the game and commands no faction.
 
@@ -49,7 +59,7 @@ Definitions of terms used across the reference.
 
 **Hexes per System**
 : The average number of map hexes per star system, `Hexes ÷ Number of systems`. A *global* density metric — how much of the map is occupied overall.
-  See [Cluster]({{< relref "/reference/cluster.md" >}}).
+  See [Placement]({{< relref "/reference/generators/genesis/placement.md" >}}).
 
 **Independent**
 : A [faction]({{< relref "/reference/faction.md" >}}) with no commanding player.
@@ -63,17 +73,18 @@ Definitions of terms used across the reference.
 
 **Minimum system spacing**
 : The smallest distance, in hexes, allowed between any two systems in a cluster.
-  An independent cluster-generation setting (`S`): an integer of at least `1`, default `2`, with no maximum. Applied as a hard threshold when placing systems — a candidate hex closer than this to an existing system is rejected — and *not* derived from the stellar density.
-  See [Cluster]({{< relref "/reference/cluster.md" >}}).
+  An independent [Genesis Placement]({{< relref "/reference/generators/genesis/placement.md" >}}) setting (`S`): an integer of at least `1`, default `2`, with no maximum. Applied as a hard threshold when placing systems — a candidate hex closer than this to an existing system is rejected — and *not* derived from the stellar density.
+  See [Placement]({{< relref "/reference/generators/genesis/placement.md" >}}).
 
 **Natural resources**
 : The raw resources deposited on planets: **fuel** (`fuel`), **metals** (`mtls`), and **non-metals** (`nmtl`).
-  Each has a cluster-generation abundance setting — `poor`, `average`, or `rich` — that shapes the deposits placed during generation.
+  A planet carries [deposits]({{< relref "/reference/glossary.md" >}}) of each; how many, and in what quantity and yield, is set by the game's [deposit generator]({{< relref "/reference/generators" >}}).
   See [Cluster]({{< relref "/reference/cluster.md" >}}).
 
 **Number of systems**
-: A cluster-generation setting: how many systems the finished cluster contains, an integer from `10` to `1,000` (default `100`). With the stellar density it sets the cluster radius.
-  See [Cluster]({{< relref "/reference/cluster.md" >}}).
+: How many systems the finished cluster contains (`N`), chosen by the GM.
+  A [Genesis Placement]({{< relref "/reference/generators/genesis/placement.md" >}}) setting: an integer from `10` to `1,000` (default `100`). With the stellar density it sets the cluster radius. The allowed range and default belong to the placement generator, not to the game.
+  See [Placement]({{< relref "/reference/generators/genesis/placement.md" >}}).
 
 **Orbit**
 : One of the ten positions in a system that holds a planet, numbered `1` to `10` from the innermost outward. An orbit may be empty.
@@ -92,9 +103,9 @@ Definitions of terms used across the reference.
   See [Players]({{< relref "/reference/players.md" >}}).
 
 **Stellar density**
-: A cluster-generation setting for how large an area systems are spread across, from `extremely dense` to `very sparse`.
+: A [Genesis Placement]({{< relref "/reference/generators/genesis/placement.md" >}}) setting for how large an area systems are spread across, from `extremely dense` to `very sparse`.
   With the number of systems it sets the cluster radius — a denser tier spreads the same systems across a smaller map — and so governs the average distance between systems. It does not set the minimum system spacing.
-  See [Cluster]({{< relref "/reference/cluster.md" >}}).
+  See [Placement]({{< relref "/reference/generators/genesis/placement.md" >}}).
 
 **System**
 : The contents of a single occupied hex in the [cluster]({{< relref "/reference/cluster.md" >}}), addressed by its axial coordinates `(q, r)`.
@@ -104,3 +115,8 @@ Definitions of terms used across the reference.
 : The unit of play a game advances by.
   Turn `0` is setup (no turn); play begins at turn `1` and counts up.
   See [Turns]({{< relref "/reference/turns.md" >}}).
+
+**Yield**
+: The percentage of a [deposit]({{< relref "/reference/glossary.md" >}}) that is recovered when it is worked; higher is better.
+  Set by the game's [deposit generator]({{< relref "/reference/generators" >}}).
+  See [Cluster]({{< relref "/reference/cluster.md" >}}).

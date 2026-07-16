@@ -20,6 +20,7 @@ is, look here.
   {{< card link="games" title="Games" subtitle="The top-level unit of play: id, master seeds, and current turn." >}}
   {{< card link="turns" title="Turns" subtitle="Turn numbering and the per-turn lifecycle of orders and reports." >}}
   {{< card link="cluster" title="Cluster" subtitle="The hex map, its coordinates, and the systems it holds." >}}
+  {{< card link="generators" title="Generators" subtitle="How a cluster is filled in: the settings, tables, and yields of each generator a game can run." >}}
   {{< card link="account" title="Account" subtitle="Your global login: email and password, shared across every game." >}}
   {{< card link="players" title="Players" subtitle="The per-game seat: id, active state, and the faction commanded." >}}
   {{< card link="faction" title="Faction" subtitle="The in-game entity a player commands: systems, orders, and reports." >}}

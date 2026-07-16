@@ -37,7 +37,7 @@ Use `weight:` in the front matter to order pages within a section.
 
 ## Rulebook structure: core and supplements
 
-> **In progress.** The rulebook is being split into a **core** and a set of **generator supplements**. Much of `content/reference/cluster.md` moves as part of it.
+The rulebook is split into a **core** and a set of **generator supplements**.
 
 - **Core** — the schema and vocabulary every generator shares: the hex map and axial `(q, r)` coordinates; that a cluster holds `N` systems; that a system has orbits, each holding a planet or nothing; that planets carry fuel, metals, and non-metals deposits, each with a quantity and a yield; and that **the GM chooses a generator for each stage of generation**.
 - **Supplement** — one generator: its settings, its tables, its distributions, and how it turns settings into a map. Supplements live under `content/reference/generators/<family>/`, one page per generation stage. The first family is **Genesis**, the v1 testbed generators: `generators/genesis/{placement,system-contents,deposits}.md`.
