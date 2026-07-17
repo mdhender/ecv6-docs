@@ -77,3 +77,26 @@ hugo --gc --minify  # production build into ./public
 Always confirm a change builds with `hugo --gc --minify` before considering it
 done. Build output (`./public`, `./resources/_gen`) is generated and gitignored —
 do not edit or commit it.
+
+## Workflow
+
+Tracked changes follow an **issue → branch → PR → merge → close** cycle by default.
+Work on `main` directly only for throwaway edits the maintainer explicitly asks to
+keep local.
+
+1. **Issue.** Create (or identify) a GitHub issue for the work, assigned to the
+   maintainer: `gh issue create --assignee "@me" …` (the owner is **mdhender**).
+2. **Branch.** Cut a `docs/<topic>` branch off `main`.
+3. **Build.** Confirm `hugo --gc --minify` is clean before committing.
+4. **Commit.** Write a descriptive message; reference the issue (e.g. `Closes #N`).
+5. **PR.** Push and open a pull request, also assigned to the maintainer
+   (`gh pr create --assignee "@me" …`), summarizing the change and linking the issue.
+6. **Merge.** Squash-merge and delete the branch
+   (`gh pr merge <n> --squash --delete-branch`).
+7. **Sync & prune.** Return to `main`, `git pull --ff-only`, and
+   `git remote prune origin` so no stale branches linger.
+8. **Close.** Ensure the issue is closed (a `Closes #N` commit auto-closes it),
+   leaving a comment that links the PR and merge commit.
+
+"Sync" means syncing the local repository with GitHub — it does **not** deploy.
+Publishing the live site is a separate rsync step the maintainer runs.
