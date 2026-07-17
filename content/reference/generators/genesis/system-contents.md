@@ -8,7 +8,7 @@ weight: 2
 The system-contents generator decides **which planets occupy a system's ten
 orbits, and how habitable each planet is**. It runs after
 [placement]({{< relref "/reference/generators/genesis/placement.md" >}}), and hands
-the resulting systems and a fixed home-system template to the
+the resulting systems to the
 [deposit generator]({{< relref "/reference/generators/genesis/deposits.md" >}}).
 
 It has **no settings**. Every ordinary system uses the same procedure, but its
@@ -103,14 +103,26 @@ minimum-habitability adjustment never increases it.
 The loop always finishes. A system with at least five planets cannot consist only
 of asteroid belts because only orbits `4` and `10` contain belts.
 
-## Home-system template
+## Home systems
 
-In addition to the generated ordinary systems, Genesis System Contents produces
-one fixed **home-system template**. The template makes no random rolls and is the
-same for every player.
+A faction's home system is not one of the ordinary systems above. It is built at
+**founding**, on demand, by a **home-system generator** — a system generator the GM
+selects and runs against an already-placed system. Founding runs three steps, in
+order:
 
-When a player is added, the game overwrites the chosen system's ordinary contents
-with this template:
+1. The GM **picks** an already-placed system.
+2. A home-system generator **rebuilds** it, replacing that system's contents — its
+   planets and habitability here, and its deposits through the
+   [deposit generator]({{< relref "/reference/generators/genesis/deposits.md" >}}).
+3. The GM **assigns** the faction to the rebuilt system.
+
+Which generator builds a given home is the **GM's choice**: she may run the same one
+for every faction or vary it from one to the next to balance the game. Home systems
+are picked and configured at the GM's discretion.
+
+Genesis provides one such generator. It makes no random rolls and produces the same
+home for every system it rebuilds — replacing the planets and habitability with this
+fixed layout:
 
 | Orbit | Planet          | Habitability |
 | ----- | --------------- | -----------: |
@@ -125,17 +137,15 @@ with this template:
 | 9     | Rocky           |            4 |
 | 10    | Asteroid belt   |            0 |
 
-This stage guarantees only the home planets' types, orbits, and habitability. The
-[deposit generator]({{< relref "/reference/generators/genesis/deposits.md" >}})
-adds deposits to the template before later stages use it; resource guarantees
-belong to that generator.
+It sets only the home planets' types, orbits, and habitability; their deposits come
+from the
+[deposit generator]({{< relref "/reference/generators/genesis/deposits.md" >}}).
 
 ## Output
 
-Genesis System Contents returns:
-
-- the planets and habitability values of every ordinary system; and
-- the fixed home-system template.
+Genesis System Contents returns the planets and habitability values of every
+ordinary system. The [home-system generator](#home-systems) runs separately — at
+founding, not at cluster generation.
 
 ## Determinism
 
