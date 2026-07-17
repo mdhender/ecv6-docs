@@ -8,7 +8,9 @@ weight: 3
 The deposit generator decides **which natural resources occur on each planet and
 the quantity and yield of every deposit**. It runs after
 [system contents]({{< relref "/reference/generators/genesis/system-contents.md" >}})
-and processes both the ordinary systems and the home-system template.
+and processes the ordinary systems. The same rules also supply the deposits when a
+[home-system generator]({{< relref "/reference/generators/genesis/system-contents.md" >}}#home-systems)
+rebuilds a system at founding.
 
 Deposits contain one of three resources: **fuel** (`fuel`), **metals** (`mtls`), or
 **non-metals** (`nmtl`). Each deposit has a quantity and a yield:
@@ -375,14 +377,15 @@ The rocky planet's habitability `24` gives a `20%` penalty, so its fuel yield is
 round down to 0.1% = 4.2%
 ```
 
-## Home-system template
+## Home systems
 
-The fixed home-system template from
-[Genesis System Contents]({{< relref "/reference/generators/genesis/system-contents.md" >}}#home-system-template)
-passes through all the rules above once. The completed template, including its
-deposits, is then copied unchanged whenever a player's home system is created.
-Deposit counts, quantities, and yields are not rerolled separately for each
-player.
+Genesis's home-system generator (see
+[System contents]({{< relref "/reference/generators/genesis/system-contents.md" >}}#home-systems))
+rebuilds a chosen system into a **fixed** home. Its deposits come from the rules
+above, resolved to a single fixed result rather than re-rolled per system, so every
+system it rebuilds receives the same planets, habitability, and deposits. Homes may
+still differ across a game — the GM may run a different generator for a different
+faction — but every home Genesis's generator builds is identical.
 
 ## Output guarantees
 
@@ -392,9 +395,8 @@ Genesis Deposits guarantees that:
 - every resource present on a planet has at least one deposit;
 - every deposit has a positive whole-number initial quantity;
 - every deposit has an initial yield of at least `0.1%`, in increments of `0.1%`;
-- current quantity and yield initially equal their corresponding initial values;
-- quantities are completed before yields are rolled; and
-- every player receives the same completed home-system template.
+- current quantity and yield initially equal their corresponding initial values; and
+- quantities are completed before yields are rolled.
 
 ## Determinism
 
@@ -406,4 +408,4 @@ results. See [Determinism]({{< relref "/reference/determinism.md" >}}).
 
 - [Cluster]({{< relref "/reference/cluster.md" >}}) — planets, resources, deposits, quantities, and yields
 - [Genesis]({{< relref "/reference/generators/genesis" >}}) — the family this generator belongs to
-- [System contents]({{< relref "/reference/generators/genesis/system-contents.md" >}}) — the systems and template processed here
+- [System contents]({{< relref "/reference/generators/genesis/system-contents.md" >}}) — the systems processed here, and the home-system generator

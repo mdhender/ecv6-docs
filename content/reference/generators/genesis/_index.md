@@ -29,6 +29,14 @@ All three are **draft**: no game depends on them yet, so their rules may change
 without a new version. Each becomes **stable** on its own schedule, once a game
 depends on it.
 
+## Home systems
+
+Genesis also provides a **home-system generator**, run when a faction is founded
+rather than at cluster generation: the GM applies it to an already-placed system to
+rebuild it into a home. It produces **identical output for every system it updates**
+— the same planets, habitability, and deposits each time.
+See [System contents]({{< relref "/reference/generators/genesis/system-contents.md" >}}#home-systems).
+
 ## Settings
 
 Genesis takes six settings, split across its stages. There is no cluster-wide

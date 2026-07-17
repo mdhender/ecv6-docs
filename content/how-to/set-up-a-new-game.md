@@ -68,14 +68,17 @@ as it lands.
 5. **Prepare home systems.**
    Decide where the players will start:
 
-   - **Build the home-system template** — the standard makeup a starting system is
-     given, so that every player begins on comparable footing.
-   - **Choose the potential home systems** — the systems in the cluster you will
-     hand out to arriving players as their starting positions.
+   - **Choose a home-system generator** — the system generator that rebuilds a
+     chosen system into a home when a faction is founded. Run the same one for every
+     player, or vary it to balance the game; home systems are picked and configured
+     at your discretion.
+   - **Choose the potential home systems** — the already-placed systems you will
+     hand out to arriving players as their starting positions. Founding rebuilds the
+     chosen system with the home-system generator, then assigns the faction to it.
 
    {{< callout type="info" >}}
-   What a home-system template specifies, and how many potential home systems a game
-   needs, will be documented here once those rules are settled.
+   What the available home-system generators produce, and how many potential home
+   systems a game needs, will be documented here once those rules are settled.
    {{< /callout >}}
 
 6. **Recruit the players.**
