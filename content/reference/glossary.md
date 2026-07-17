@@ -46,6 +46,10 @@ Definitions of terms used across the reference.
 **Flat-top**
 : The hex orientation used by the grid: each hex has a flat edge at its top and bottom and a point at its left and right.
 
+**Fuel**
+: The natural resource (`fuel`) that powers a ship's drives. Planets carry [deposits]({{< relref "/reference/cluster.md" >}}#deposits) of it, and ships spend it to [jump]({{< relref "/reference/movement.md" >}}#jumps) and [maneuver]({{< relref "/reference/movement.md" >}}#maneuvers), at a per-hex rate set by the drive units their mass powers.
+  See [Movement]({{< relref "/reference/movement.md" >}}) and [Cluster]({{< relref "/reference/cluster.md" >}}#deposits).
+
 **Game**
 : The top-level unit of play; the cluster, the players, and their factions belong to it.
 
@@ -61,6 +65,10 @@ Definitions of terms used across the reference.
 : A per-planet number rating how habitable a planet is; higher values are more habitable.
   See [Cluster]({{< relref "/reference/cluster.md" >}}).
 
+**HDRV**
+: **Hyperdrive** units — the drive that powers a ship's [jumps]({{< relref "/reference/movement.md" >}}#jumps) between systems; its tech level is the drive's reach, in hexes per turn. Independent of the system drive ([SDRV]({{< relref "/reference/movement.md" >}}#maneuvers)).
+  See [Movement]({{< relref "/reference/movement.md" >}}#jumps).
+
 **Hexes per System**
 : The average number of map hexes per star system, `Hexes ÷ Number of systems`. A *global* density metric — how much of the map is occupied overall.
   See [Placement]({{< relref "/reference/generators/genesis/placement.md" >}}).
@@ -70,11 +78,23 @@ Definitions of terms used across the reference.
   A faction becomes independent when the player commanding it leaves the game; other players still encounter and contend with it.
   See [Faction]({{< relref "/reference/faction.md" >}}).
 
+**In-hyperspace**
+: The state of a ship in transit during a multi-turn [jump]({{< relref "/reference/movement.md" >}}#jumps): it does not appear on scans, is not seen by other players, and does not stop at or interact with the systems it passes.
+  See [Movement]({{< relref "/reference/movement.md" >}}#while-in-transit).
+
+**Jump**
+: Moving a ship between two systems along a [jump route]({{< relref "/reference/routes.md" >}}), powered by its hyperdrive ([HDRV]({{< relref "/reference/movement.md" >}}#jumps)). A route of distance `d` takes `⌈d / t⌉` turns at drive reach `t`, and burns fuel that rises the farther the ship pushes without stopping.
+  See [Movement]({{< relref "/reference/movement.md" >}}#jumps).
+
 **Jump route**
 : An undirected, fixed route linking two systems, weighted by the [hex distance]({{< relref "/reference/cluster.md" >}}#measuring-distance) between them, along which ships travel between systems.
   Symmetric — the same route both ways — with no intermediate waypoints, and at most one per pair. Built when the cluster is generated and unchanging during play.
   The act of moving along a route (a **jump**) is defined by the movement rules, not here.
   See [Routes]({{< relref "/reference/routes.md" >}}).
+
+**Maneuver**
+: Moving a ship between two orbits within a single system, powered by its system drive ([SDRV]({{< relref "/reference/movement.md" >}}#maneuvers)). Reaches any orbit in one turn, with no overdrive structure.
+  See [Movement]({{< relref "/reference/movement.md" >}}#maneuvers).
 
 **Master seed**
 : One of the two `uint64` values (`seed1`, `seed2`) saved for a game.
@@ -113,9 +133,13 @@ Definitions of terms used across the reference.
   See [Players]({{< relref "/reference/players.md" >}}).
 
 **Route network**
-: The complete set of [jump routes]({{< relref "/reference/glossary.md" >}}#jump-route) in a cluster — the graph along which ships travel between systems.
+: The complete set of [jump routes]({{< relref "/reference/routes.md" >}}) in a cluster — the graph along which ships travel between systems.
   A fixed rule of the cluster, not a generator's output: it is derived from the finished system positions and the GM's route-density tier once placement is done, the same way in every game and with no randomness.
   See [Routes]({{< relref "/reference/routes.md" >}}).
+
+**SDRV**
+: **System drive** units — the drive that powers a ship's [maneuvers]({{< relref "/reference/movement.md" >}}#maneuvers) between orbits within a system. Independent of the hyperdrive ([HDRV]({{< relref "/reference/movement.md" >}}#jumps)).
+  See [Movement]({{< relref "/reference/movement.md" >}}#maneuvers).
 
 **Stellar density**
 : A [Genesis Placement]({{< relref "/reference/generators/genesis/placement.md" >}}) setting for how large an area systems are spread across, from `extremely dense` to `very sparse`.

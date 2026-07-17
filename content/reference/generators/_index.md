@@ -1,6 +1,6 @@
 ---
 title: Generators
-weight: 5
+weight: 6
 sidebar:
   open: true
 ---
