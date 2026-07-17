@@ -21,7 +21,7 @@ A jump route is an **undirected edge between two systems**:
 - **A pure graph edge.** A route links its two endpoint systems directly, with no
   intermediate waypoints. It carries a single value — its **distance**, the
   [hex distance]({{< relref "/reference/cluster.md" >}}#measuring-distance) between
-  the endpoints.
+  the endpoints: the fewest hexes between the two systems.
 - **Canonical.** There is at most one route between any given pair of systems.
 - **Fixed at generation.** The whole network is built once, when the cluster is
   generated, and never changes during play.

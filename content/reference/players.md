@@ -1,6 +1,6 @@
 ---
 title: Players
-weight: 7
+weight: 8
 ---
 
 A **player** is a person's seat in a single game. When an
