@@ -52,7 +52,7 @@ true — it was just attached to the wrong noun.
 Not every player commands a faction. One seat in each game belongs to the **game
 master (GM)** — a player whose GM flag is set. The GM manages the game:
 generating the cluster, processing turns, and looking after the other players. The
-GM commands no faction of their own. They are still a player — a seat in one game,
+GM commands no faction of her own. She is still a player — a seat in one game,
 reached through an account — just one whose job is to run the table rather than to
 sit at it as a rival.
 
