@@ -1,6 +1,6 @@
 ---
 title: Faction
-weight: 7
+weight: 8
 ---
 
 A **faction** is the in-game power a player commands. A faction belongs to exactly

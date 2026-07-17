@@ -70,6 +70,12 @@ Definitions of terms used across the reference.
   A faction becomes independent when the player commanding it leaves the game; other players still encounter and contend with it.
   See [Faction]({{< relref "/reference/faction.md" >}}).
 
+**Jump route**
+: An undirected, fixed route linking two systems, weighted by the [hex distance]({{< relref "/reference/cluster.md" >}}#measuring-distance) between them, along which ships travel between systems.
+  Symmetric — the same route both ways — with no intermediate waypoints, and at most one per pair. Built when the cluster is generated and unchanging during play.
+  The act of moving along a route (a **jump**) is defined by the movement rules, not here.
+  See [Routes]({{< relref "/reference/routes.md" >}}).
+
 **Master seed**
 : One of the two `uint64` values (`seed1`, `seed2`) saved for a game.
   Together they are the root of the game's randomness; each subsystem derives its own seeds from them.
@@ -105,6 +111,11 @@ Definitions of terms used across the reference.
 : A person's seat in a single game: the per-game id, active state, GM flag, and the faction commanded (none for the GM).
   A person's global identity — email and password — is their [account]({{< relref "/reference/account.md" >}}).
   See [Players]({{< relref "/reference/players.md" >}}).
+
+**Route network**
+: The complete set of [jump routes]({{< relref "/reference/glossary.md" >}}#jump-route) in a cluster — the graph along which ships travel between systems.
+  A fixed rule of the cluster, not a generator's output: it is derived from the finished system positions and the GM's route-density tier once placement is done, the same way in every game and with no randomness.
+  See [Routes]({{< relref "/reference/routes.md" >}}).
 
 **Stellar density**
 : A [Genesis Placement]({{< relref "/reference/generators/genesis/placement.md" >}}) setting for how large an area systems are spread across, from `extremely dense` to `very sparse`.

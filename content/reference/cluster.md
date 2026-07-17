@@ -9,7 +9,8 @@ Each occupied hex holds a **system** addressed by its axial coordinates `(q, r)`
 The cluster belongs to the game and is generated once, at setup.
 
 This page defines what a cluster **is**: the vocabulary and the shape every
-cluster shares, whichever generators built it. The values that fill one in — how
+cluster shares, whichever generators built it — its coordinates, its systems, and
+the [jump routes](#routes) that connect them. The values that fill one in — how
 many systems there are, how far apart they sit, which planet occupies which orbit,
 and what each planet carries — come from the
 [generators]({{< relref "/reference/generators" >}}) the GM chose for the game.
@@ -96,6 +97,21 @@ How many deposits a planet carries, and how their quantities and yields are set,
 is decided by the game's
 [deposit generator]({{< relref "/reference/generators" >}}).
 
+## Routes
+
+Ships travel between systems only along **jump routes** — undirected edges that fix
+which systems are directly reachable from which. A route carries a single value, the
+[hex distance](#measuring-distance) between its two endpoints; the network is set
+once when the cluster is generated and never changes during play.
+
+The route network is a **fixed rule of the cluster, not a value a generator fills
+in**: once placement has given the systems their coordinates, the routes follow from
+the same procedure in every game, whichever generators built the map. See
+[Routes]({{< relref "/reference/routes.md" >}}) for the full definition — what a
+route is, how the network is derived (backbone, adjacency, and texture passes, tuned
+by the GM's route-density tier), the six-route ceiling, and how to reconstruct it by
+hand.
+
 ## Generation
 
 The GM generates the cluster once, at setup. Generation runs in three **stages**,
@@ -111,6 +127,12 @@ Each stage's generator carries its own settings and its own version, and a game
 records all three. The generators a game can run — and how to find the ones your
 game ran — are published under
 [Generators]({{< relref "/reference/generators" >}}).
+
+Placement also fixes the cluster's
+[route network]({{< relref "/reference/routes.md" >}}). The routes are **not** a
+chosen generator: once the systems have their coordinates, the routes follow from a
+fixed rule, so every placement generator produces the same routes for the same
+systems and route-density tier.
 
 ### Reproducibility
 
