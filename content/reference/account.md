@@ -1,6 +1,6 @@
 ---
 title: Account
-weight: 5
+weight: 6
 ---
 
 An **account** is a person's identity across all of Epimethean Challenge. There

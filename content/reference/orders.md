@@ -1,6 +1,6 @@
 ---
 title: Orders
-weight: 9
+weight: 10
 ---
 
 **Orders** are the instructions a player issues for a turn.
