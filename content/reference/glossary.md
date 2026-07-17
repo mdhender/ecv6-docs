@@ -132,6 +132,13 @@ Definitions of terms used across the reference.
   A person's global identity — email and password — is their [account]({{< relref "/reference/account.md" >}}).
   See [Players]({{< relref "/reference/players.md" >}}).
 
+**Roles (game)**
+: The two in-game roles. The **game master** (GM) runs the game and helps its players but commands no faction; the **players** command their [factions]({{< relref "/reference/faction.md" >}}) and play to win. A faction with no commanding player is **independent** and is run by the engine, not the GM.
+  See [Players]({{< relref "/reference/players.md" >}}).
+
+**Roles (server)**
+: The two server-side roles, neither of which plays a game. The **operator** installs and updates the software and the system schedulers that run it. The **administrator** manages [accounts]({{< relref "/reference/account.md" >}}) and [games]({{< relref "/reference/games.md" >}}) — creating them, not running them.
+
 **Route network**
 : The complete set of [jump routes]({{< relref "/reference/routes.md" >}}) in a cluster — the graph along which ships travel between systems.
   A fixed rule of the cluster, not a generator's output: it is derived from the finished system positions and the GM's route-density tier once placement is done, the same way in every game and with no randomness.
