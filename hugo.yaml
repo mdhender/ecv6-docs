@@ -1,6 +1,6 @@
 # Epimethean Challenge (EC) — documentation site
 # Hugo + Hextra theme, organized with the Diátaxis framework.
-baseURL: https://ecv6.pbbgaming.com/
+baseURL: https://ec.pbbgaming.com/docs
 title: Epimethean Challenge
 
 # Hextra ships as a Hugo Module.
